@@ -75,7 +75,7 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(225),
 
-                Forms\Components\FileUpload::make('File') 
+                Forms\Components\FileUpload::make('file') 
                 ->label('File')
                 ->image() 
                 ->required() 
