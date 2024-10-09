@@ -60,8 +60,8 @@ class CartResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('Userid')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Product_id')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('QTY')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Desc')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),
                 
             ])
             ->filters([

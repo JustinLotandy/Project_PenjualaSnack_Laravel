@@ -62,9 +62,8 @@ class TransactionDetailResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Productid')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Trancastionnumber')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Qty')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('id')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Trancastionnumber')->label('Nomor Transaksi')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Qty')->label('Kuantitas')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Price')->sortable()->searchable(),
             ])
             ->filters([
