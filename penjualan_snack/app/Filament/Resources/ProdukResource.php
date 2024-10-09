@@ -75,13 +75,13 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(225),
 
-                Forms\Components\TextInput::make('file')
-    ->label('File')
-    ->required()
-    ->maxSize(1024) // Maksimum ukuran file dalam kilobyte
-    ->disk('public') // Disk tempat file akan disimpan
-    ->directory('uploads') // Folder tempat file disimpan
-    ->acceptedFileTypes(['image/*', 'application/pdf']),
+                Forms\Components\FileUpload::make('File') 
+                ->label('File')
+                ->image() 
+                ->required() 
+                ->disk('public')
+                ->directory('product-images')
+                ->visibility('public'),
 
                 Forms\components\DateTimePicker::make('Created_at')
                 ->label("Created At")
@@ -118,7 +118,10 @@ class ProdukResource extends Resource
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Deskirpsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('file')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
+                    return basename($state); 
+                })          ->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Stok')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Harga')->sortable()->searchable(),
@@ -149,7 +152,7 @@ class ProdukResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListProduk::route('/'),
+            'index' => Pages\ListProduks::route('/'),
             'create' => Pages\CreateProduk::route('/create'),
             'edit' => Pages\EditProduk::route('/{record}/edit'),
         ];

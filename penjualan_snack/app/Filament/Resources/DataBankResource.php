@@ -42,10 +42,13 @@ class DataBankResource extends Resource
                 ->maxLength(16),
             
 
-                Forms\components\TextInput::make('file')
-                ->label("File")
-                ->required()
-                ->maxLength(16),
+                Forms\Components\FileUpload::make('file') 
+                ->label('File')
+                ->image() 
+                ->required() 
+                ->disk('public')
+                ->directory('product-images')
+                ->visibility('public'), 
 
                 Forms\components\DateTimePicker::make('created_at')
                 ->label("CreatedAt")
@@ -66,7 +69,9 @@ class DataBankResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('norek')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('file')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
+        return basename($state); 
+    })          ->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('created_by')->sortable()->searchable(),
                 
             ])
