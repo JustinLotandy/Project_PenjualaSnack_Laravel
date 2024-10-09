@@ -75,10 +75,13 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(225),
 
-                Forms\components\TextInput::make('File')
-                ->label("File")
-                ->required()
-                ->maxLength(225),
+                Forms\Components\TextInput::make('file')
+    ->label('File')
+    ->required()
+    ->maxSize(1024) // Maksimum ukuran file dalam kilobyte
+    ->disk('public') // Disk tempat file akan disimpan
+    ->directory('uploads') // Folder tempat file disimpan
+    ->acceptedFileTypes(['image/*', 'application/pdf']),
 
                 Forms\components\DateTimePicker::make('Created_at')
                 ->label("Created At")
@@ -106,6 +109,7 @@ class ProdukResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('Created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Userid')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
@@ -114,8 +118,7 @@ class ProdukResource extends Resource
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Deskirpsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('File')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Created_at')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('file')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Stok')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Harga')->sortable()->searchable(),

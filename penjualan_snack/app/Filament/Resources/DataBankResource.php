@@ -20,11 +20,11 @@ class DataBankResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     public static function getModelLabel():string{
-        return'kategori';
+        return'Data Bank';
     }
 
     public static function getPluralModelLabel():string{
-        return 'Kategori';
+        return 'Data Bank';
     }
     public static function form(Form $form): Form
     {
@@ -63,10 +63,10 @@ class DataBankResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('norek')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('file')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('created_by')->sortable()->searchable(),
                 
             ])
