@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PhpParser\Node\Stmt\Label;
 
 class ProdukResource extends Resource
 {
@@ -110,13 +111,13 @@ class ProdukResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Created_at')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Userid')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Userid')->label('User ID')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ukuran')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Expired')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Deskirpsi')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Deskirpsi')->label('Deskripsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
                     return basename($state); 
