@@ -80,7 +80,7 @@ class ProdukResource extends Resource
                 ->image() 
                 ->required() 
                 ->disk('public')
-                ->directory('product-images')
+                ->directory('images')
                 ->visibility('public'),
 
                 Forms\components\DateTimePicker::make('Created_at')

@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Produk extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','Userid','Kategori','Isi','Ukuran','Expired','Berat','Deskirpsi','Nama','File','Created_at','Created_by','Stok','Harga'];
+    protected $fillable = ['id','Userid','Kategori','Isi','Ukuran','Expired','Berat','Deskirpsi','Nama','file','Created_at','Created_by','Stok','Harga'];
     public $timestamps = false;
 }
