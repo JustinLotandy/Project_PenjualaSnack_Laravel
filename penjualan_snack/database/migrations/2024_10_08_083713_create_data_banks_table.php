@@ -12,11 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_banks', function (Blueprint $table) {
-            $table->integer('id',autoIncrement:11)->primary();
+            $table->integer('id_databank')->primary();
             $table->char('norek', length: 255); 
-            $table->char('nama', length: 255); 
+            $table->char('nama_databank', length: 255); 
             $table->char('file', length: 255); 
-            $table->dateTime('created_at'); 
+            $table->datetime('created_at'); 
             $table->char('created_by', length: 255); 
         });
     }

@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Kategori extends Model
 {
     use HasFactory;
-    protected $fillable = ['id','Nama_kategori','View_count'];
+    protected $fillable = ['id_kategori','Nama_kategori','View_count'];
 }

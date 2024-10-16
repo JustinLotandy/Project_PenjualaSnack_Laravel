@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('produks', function (Blueprint $table) {
-            $table->integer('id',autoIncrement:11)->primary();
+            $table->integer('id_produk',11)->primary();
             $table->integer('Userid');
             $table->char('Kategori', length: 255); 
             $table->char('Isi', length: 255);
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->char('Expired', length: 255);
             $table->integer('Berat');
             $table->char('Deskirpsi', length: 255);
-            $table->char('Nama', length: 255);
+            $table->char('Nama_produk', length: 255);
             $table->char('file', length: 255);
             $table->dateTime('Created_at');
             $table->char('Created_by', length: 255);

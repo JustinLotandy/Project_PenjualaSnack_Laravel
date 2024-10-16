@@ -31,7 +31,7 @@ class DataBankResource extends Resource
         return $form
             ->schema([
             
-                Forms\components\TextInput::make('nama')
+                Forms\components\TextInput::make('nama_databank')
                 ->label("Nama")
                 ->required()
                 ->maxLength(20),
@@ -67,7 +67,7 @@ class DataBankResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('nama')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('norek')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
         return basename($state); 
