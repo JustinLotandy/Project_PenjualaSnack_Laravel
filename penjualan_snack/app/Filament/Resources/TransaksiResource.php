@@ -33,6 +33,11 @@ class TransaksiResource extends Resource
     {
         return $form
         ->schema([
+
+            Forms\components\TextInput::make('kode_transaksi')
+            ->label("Kode Transaksi")
+            ->required()
+            ->maxLength(11),
             
             Forms\components\TextInput::make('kode_pengguna')
             ->label("User ID")

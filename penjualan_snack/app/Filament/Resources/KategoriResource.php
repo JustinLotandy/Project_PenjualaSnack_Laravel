@@ -34,6 +34,10 @@ class KategoriResource extends Resource
         return $form
             ->schema([
                 
+                Forms\components\TextInput::make('kode_kategori')
+                ->label("Kode Kategori")
+                ->required()
+                ->maxLength(1000),
 
                 Forms\components\TextInput::make('Nama_kategori')
                 ->label("Nama Kategori")

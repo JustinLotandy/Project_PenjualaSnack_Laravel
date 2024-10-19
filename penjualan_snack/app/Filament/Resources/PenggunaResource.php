@@ -33,7 +33,10 @@ class PenggunaResource extends Resource
     {
         return $form
             ->schema([
-                
+                Forms\components\TextInput::make('kode_pengguna')
+                ->label("User ID")
+                ->required()
+                ->maxLength(1000),
 
                 Forms\components\TextInput::make('Username')
                 ->label("Username")

@@ -34,6 +34,11 @@ class TransactionDetailResource extends Resource
         return $form
             ->schema([
 
+            Forms\components\TextInput::make('kode_transaction_detail')
+            ->label("kode_transaction_detail")
+            ->required()
+            ->maxLength(11),
+
             Forms\components\TextInput::make('Productid')
             ->label("ID Produk")
             ->required()

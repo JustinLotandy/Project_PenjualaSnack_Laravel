@@ -11,16 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        /*Schema::create('carts', function (Blueprint $table) {
+        Schema::create('carts', function (Blueprint $table) {
             $table->char('kode_cart')->primary();
-            $table->char('kode_pengguna');
+            $table->char('kode_pengguna')->unique();
             $table->char('Product_id', length: 255); 
             $table->char('QTY', length: 255);
             $table->char('Desc', length: 255);  
             $table->timestamps();
 
             $table->foreign('Product_id')->references('kode_produk')->on('produks');
-        });*/
+        });
     }
 
     /**

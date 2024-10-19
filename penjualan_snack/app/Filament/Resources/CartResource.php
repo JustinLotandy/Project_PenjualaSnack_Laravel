@@ -40,7 +40,7 @@ class CartResource extends Resource
                 ->required()
                 ->maxLength(20),
 
-                Forms\components\TextInput::make('Product_id')
+                Forms\components\TextInput::make('kode_product')
                 ->label("ID Product")
                 ->required()
                 ->maxLength(20),
@@ -63,7 +63,7 @@ class CartResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('kode_cart')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Product_id')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_product')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),
                 
