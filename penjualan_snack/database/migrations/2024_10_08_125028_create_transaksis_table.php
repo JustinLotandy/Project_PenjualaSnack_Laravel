@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaksis', function (Blueprint $table) {
-            $table->integer('id_transaksi',11)->primary();
-            $table->integer('Userid');
+        /*Schema::create('transaksis', function (Blueprint $table) {
+            $table->char('kode_transaksi')->primary();
+            $table->char('kode_databank');
+            $table->char('userid');
             $table->char('Transactionnumber', length: 255); 
             $table->integer('Total_berat');
             $table->char('Phone', length: 255);
@@ -26,7 +27,9 @@ return new class extends Migration
             $table->char('Status', length: 255);
             $table->dateTime('Date');
             $table->char('Adress');
-        });
+            $table->foreign('kode_databank')->references('kode_databank')->on('data_banks');
+            $table->foreign('userid')->references('kode_pengguna')->on('carts');
+        });*/
     }
 
     /**

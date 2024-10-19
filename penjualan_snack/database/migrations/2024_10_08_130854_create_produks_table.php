@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('produks', function (Blueprint $table) {
-            $table->integer('id_produk',11)->primary();
-            $table->integer('Userid');
+            $table->char('kode_produk')->primary();
+            $table->char('Userid');
             $table->char('Kategori', length: 255); 
             $table->char('Isi', length: 255);
             $table->char('Ukuran', length: 255);
@@ -26,6 +26,9 @@ return new class extends Migration
             $table->char('Created_by', length: 255);
             $table->integer('Stok');
             $table->integer('Harga');
+
+            $table->foreign('Userid')->references('kode_pengguna')->on('penggunas');
+            $table->foreign('Kategori')->references('kode_kategori')->on('kategoris');
             
         });
     }

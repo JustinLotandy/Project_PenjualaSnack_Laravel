@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transaction_details', function (Blueprint $table) {
-            $table->integer('id_transaction_detail',11)->primary();
-            $table->integer('Productid');
+        /*Schema::create('transaction_details', function (Blueprint $table) {
+            $table->char('kode_transaction_detail')->primary();
+            $table->integer('kode_product');
             $table->char('Trancastionnumber',length:255);  
             $table->integer('Qty');
             $table->integer('Price');
             $table->timestamps();
-        });
+            $table->foreign('Trancastionnumber')->references('Transactionnumber')->on('transaksis');
+        });*/
     }
 
     /**

@@ -34,10 +34,15 @@ class TransaksiResource extends Resource
         return $form
         ->schema([
             
-            Forms\components\TextInput::make('Userid')
+            Forms\components\TextInput::make('kode_pengguna')
             ->label("User ID")
             ->required()
             ->maxLength(11),
+
+            Forms\components\TextInput::make('kode_databank')
+            ->label("Kode Data Bank")
+            ->required()
+            ->maxLength(225),
             
             Forms\components\TextInput::make('Transactionnumber')
             ->label("Transaction Number")
@@ -105,7 +110,8 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Userid')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Transactionnumber')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total_berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Phone')->sortable()->searchable(),

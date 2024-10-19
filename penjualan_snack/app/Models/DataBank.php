@@ -8,6 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class DataBank extends Model
 {
     use HasFactory;
-    protected $fillable = ['id_databank','kode','norek','nama_databank','file','created_at','created_by'];
+    protected $fillable = ['kode_databank','kode','norek','nama_databank','file','created_at','created_by'];
     public $timestamps = false;
 }

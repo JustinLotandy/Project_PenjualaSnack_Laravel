@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('data_banks', function (Blueprint $table) {
-            $table->integer('id_databank')->primary();
+            $table->char('kode_databank')->primary();
             $table->char('norek', length: 255); 
             $table->char('nama_databank', length: 255); 
             $table->char('file', length: 255); 

@@ -30,10 +30,13 @@ class CartResource extends Resource
         return $form
             ->schema([
                 
-                
+                Forms\components\TextInput::make('kode_cart')
+                ->label("Kode Cart")
+                ->required()
+                ->maxLength(20),
 
-                Forms\components\TextInput::make('Userid')
-                ->label("UserID")
+                Forms\components\TextInput::make('Kode_pengguna')
+                ->label("Kode pengguna")
                 ->required()
                 ->maxLength(20),
 
@@ -58,7 +61,8 @@ class CartResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('Userid')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_cart')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Product_id')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),
