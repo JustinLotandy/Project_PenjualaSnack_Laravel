@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksis', function (Blueprint $table) {
-            $table->char('kode_transaksi')->primary();
+            $table->char('kode_transaksi',length:50)->primary();
             $table->char('kode_databank');
-            $table->char('userid');
-            $table->char('Transactionnumber', length: 255)->unique(); 
+            $table->char('userid'); 
             $table->integer('Total_berat');
             $table->char('Phone', length: 255);
             $table->char('No-resi', length: 255);

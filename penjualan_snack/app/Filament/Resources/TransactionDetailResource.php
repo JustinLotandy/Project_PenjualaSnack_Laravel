@@ -44,7 +44,7 @@ class TransactionDetailResource extends Resource
             ->required()
             ->maxLength(11),
             
-            Forms\components\TextInput::make('Trancastionnumber')
+            Forms\components\TextInput::make('kode_transaksi')
             ->label("Transaction Number")
             ->required()
             ->maxLength(225),
@@ -67,7 +67,7 @@ class TransactionDetailResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Productid')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Trancastionnumber')->label('Nomor Transaksi')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_transaksi')->label('Nomor Transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Qty')->label('Kuantitas')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Price')->sortable()->searchable(),
             ])
