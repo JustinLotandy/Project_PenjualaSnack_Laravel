@@ -15,8 +15,15 @@ class PenggunaSeeder extends Seeder
     public function run(): void
     {
         $pengguna = new Pengguna;
-        $pengguna->id_pengguna=1;
+        $pengguna->kode_pengguna='US-001';
         $pengguna->Username='Budi';
+        $pengguna->password='12345';
+        $pengguna->Role='Stok mangement';
+        $pengguna->save();
+
+        $pengguna = new Pengguna;
+        $pengguna->kode_pengguna='US-002';
+        $pengguna->Username='Gary';
         $pengguna->password='12345';
         $pengguna->Role='Stok mangement';
         $pengguna->save();

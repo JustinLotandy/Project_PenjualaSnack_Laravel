@@ -16,7 +16,7 @@ class data_bankSeeder extends Seeder
     {   
         DataBank::query()->delete();
         $databank = new DataBank;
-        $databank->id_databank=1;
+        $databank->kode_databank=1;
         $databank->norek='126543212';
         $databank->nama_databank='Hardy';
         $databank->file='buktitransaksi.pdf';

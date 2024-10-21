@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('Qty');
             $table->integer('Price');
             $table->timestamps();
-            $table->foreign('Transactionnumber')->references('Transactionnumber')->on('transaksis');
+            $table->foreign('kode_transaksi')->references('kode_transaksi')->on('transaksis');
         });
     }
 

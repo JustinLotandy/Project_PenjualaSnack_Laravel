@@ -59,6 +59,11 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(255),
 
+            Forms\components\TextInput::make('nama_produk')
+            ->label("Nama Produk")
+            ->required()
+            ->maxLength(11),
+
             Forms\components\TextInput::make('Phone')
             ->label("Phone")
             ->required()
