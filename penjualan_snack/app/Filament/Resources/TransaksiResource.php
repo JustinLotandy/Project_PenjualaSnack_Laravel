@@ -39,7 +39,7 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(11),
             
-            Forms\components\TextInput::make('kode_pengguna')
+            Forms\components\TextInput::make('userid')
             ->label("User ID")
             ->required()
             ->maxLength(11),
@@ -49,7 +49,7 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(225),
             
-            Forms\components\TextInput::make('Transactionnumber')
+            Forms\components\TextInput::make('kode_transaksi')
             ->label("Transaction Number")
             ->required()
             ->maxLength(225),
@@ -69,7 +69,7 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(255),
 
-            Forms\components\TextInput::make('No-resi')
+            Forms\components\TextInput::make('No_resi')
             ->label("No resi")
             ->required()
             ->maxLength(255),
@@ -94,7 +94,7 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(225),
 
-            Forms\components\TextInput::make('Bukit_tansaksi')
+            Forms\components\TextInput::make('Bukti_tansaksi')
             ->label("Bukti Transaksi")
             ->required()
             ->maxLength(225),
@@ -120,17 +120,17 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('userid')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Transactionnumber')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total_berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Phone')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('No-resi')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('No_resi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kurir')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kota')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ongkir')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Bukit_tansaksi')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Bukti_tansaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Status')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Date')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Adress')->sortable()->searchable(),

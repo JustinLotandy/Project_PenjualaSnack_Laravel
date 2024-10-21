@@ -9,4 +9,7 @@ class Pengguna extends Model
 {
     use HasFactory;
     protected $fillable = ['kode_pengguna','Username','password','Role'];
+
+    protected $primaryKey = 'kode_pengguna';
+    public $incrementing = false;
 }

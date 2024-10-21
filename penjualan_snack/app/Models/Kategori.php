@@ -9,4 +9,7 @@ class Kategori extends Model
 {
     use HasFactory;
     protected $fillable = ['kode_kategori','Nama_kategori','View_count'];
+
+    protected $primaryKey = 'kode_kategori';
+    public $incrementing = false;
 }

@@ -46,7 +46,7 @@ class ProdukResource extends Resource
                 ->maxLength(11),
                 
                 
-                Forms\components\TextInput::make('kode_kategori')
+                Forms\components\TextInput::make('kategori')
                 ->label("Kategori")
                 ->required()
                 ->maxLength(225),
@@ -116,9 +116,9 @@ class ProdukResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('Created_at')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('kode_product')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('kode_pengguna')->label('User ID')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('kode_kategori')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_produk')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Userid')->label('User ID')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ukuran')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Expired')->sortable()->searchable(),
