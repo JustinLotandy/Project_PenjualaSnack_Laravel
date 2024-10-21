@@ -26,6 +26,7 @@ class CartSeeder extends Seeder
         $Carts = new Cart;
         $Carts->kode_cart = 'CART002';
         $Carts->Product_id = 'P-002'; // Wet snack
+        $Carts->kode_pengguna = 'US-001';
         $Carts->QTY = '10';
         $Carts->Desc = 'Wet snack - Pudding';
         $Carts->save();

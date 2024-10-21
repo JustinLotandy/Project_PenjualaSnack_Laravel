@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('carts', function (Blueprint $table) {
             $table->char('kode_cart')->primary();
-            $table->char('kode_pengguna')->unique();
+            $table->char('kode_pengguna');
             $table->char('Product_id', length: 255); 
             $table->char('QTY', length: 255);
             $table->char('Desc', length: 255);  

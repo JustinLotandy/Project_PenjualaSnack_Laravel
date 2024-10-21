@@ -13,7 +13,7 @@ class TransactionDetailSeeder extends Seeder
      */
     public function run(): void
     {
-        $data_pengguna = new ;
+        $data_pengguna = new detailTransaksi;
         $data_pengguna->kode_pengguna='US-001';
         $data_pengguna->Username='Budi';
         $data_pengguna->password='12345';

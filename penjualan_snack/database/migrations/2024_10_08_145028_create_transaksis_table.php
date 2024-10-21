@@ -18,7 +18,7 @@ return new class extends Migration
             $table->char('nama_produk');
             $table->integer('Total_berat');
             $table->char('Phone', length: 255);
-            $table->char('No-resi', length: 255);
+            $table->char('No_resi', length: 255);
             $table->char('Kurir');
             $table->char('Kota', length: 255);
             $table->integer('Ongkir');

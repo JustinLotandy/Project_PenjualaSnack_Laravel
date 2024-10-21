@@ -15,7 +15,7 @@ class ProdukSeeder extends Seeder
     public function run(): void
     {
         $data_produk = new Produk; 
-        $data_produk->kode_produk = 'P-001';  
+        $data_produk->kode_produk = 'P-004';  
         $data_produk->Userid = 'US-001';
         $data_produk->Created_by = 'Butet'; 
         $data_produk->kategori = 1;
@@ -30,6 +30,23 @@ class ProdukSeeder extends Seeder
         $data_produk->Stok = 100; 
         $data_produk->Harga = 15000; 
         $data_produk->save(); 
+
+        $data_produk = new Produk; 
+        $data_produk->kode_produk = 'P-005';  
+        $data_produk->Userid = 'US-001';
+        $data_produk->Created_by = 'Butet'; 
+        $data_produk->kategori = 1;
+        $data_produk->Isi = '100'; 
+        $data_produk->ukuran = '10cm'; 
+        $data_produk->Expired = '2024-12-31'; 
+        $data_produk->Berat = 250; 
+        $data_produk->Deskirpsi = 'Poporn'; 
+        $data_produk->nama_produk = 'popcorn'; 
+        $data_produk->file = 'image.jpg'; 
+        $data_produk->Created_at = Carbon::now();  
+        $data_produk->Stok = 100; 
+        $data_produk->Harga = 15000; 
+        $data_produk->save();
 
         $data_produk = new Produk;
         $data_produk->kode_produk = 'P-001';
