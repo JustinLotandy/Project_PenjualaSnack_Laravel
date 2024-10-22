@@ -76,7 +76,7 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(225),
                 
-                Forms\components\TextInput::make('Nama')
+                Forms\components\TextInput::make('Nama_produk')
                 ->label("Nama")
                 ->required()
                 ->maxLength(225),
@@ -124,7 +124,7 @@ class ProdukResource extends Resource
                 Tables\Columns\TextColumn::make('Expired')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Deskirpsi')->label('Deskripsi')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Nama')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Nama_produk')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
                     return basename($state); 
                 })          ->sortable()->searchable(),
