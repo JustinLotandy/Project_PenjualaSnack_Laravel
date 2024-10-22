@@ -14,11 +14,11 @@ class TransactionDetailSeeder extends Seeder
     public function run(): void
     {
         /*$data_pengguna = new detailTransaksi;
+        $data_pengguna->kode_transaction_detail='KTD-001';
         $data_pengguna->kode_product='P-001';
         $data_pengguna->kode_transaksi='TRK-001';
-        $data_pengguna->Username='Budi';
-        $data_pengguna->password='12345';
-        $data_pengguna->Role='Stok mangement';
+        $data_pengguna->QTY='';
+        $data_pengguna->Price='12345';
         $data_pengguna->save();*/
     }
 }
