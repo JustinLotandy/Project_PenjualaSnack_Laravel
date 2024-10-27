@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('Price');
             $table->timestamps();
             $table->foreign('kode_transaksi')->references('kode_transaksi')->on('transaksis');
-        });
+        }); 
     }
 
     /**
