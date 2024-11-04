@@ -5,6 +5,7 @@ namespace App\Filament\Resources\CartResource\Pages;
 use App\Filament\Resources\CartResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Barryvdh\DomPDF\Facade\pdf;
 
 class ListCarts extends ListRecords
 {
@@ -19,7 +20,7 @@ class ListCarts extends ListRecords
             ->icon('heroicon-o-printer')
             ->action(fn() => static::cetakLaporan())
             ->requiresConfirmation()
-            ->modalHeading('Cetak Laporan Pengguna')
+            ->modalHeading('Cetak Laporan Cart')
             ->modalSubheading('Apakah Anda yakin ingin mencetak laporan?'),
         ];
     }
@@ -29,8 +30,8 @@ class ListCarts extends ListRecords
     // Ambil data pengguna
     $data = \App\Models\Cart::all();
     // Load view untuk cetak PDF
-    $pdf = \PDF::loadView('laporan.cetak', ['data' => $data]);
+    $pdf = PDF::loadView('laporan.cetakcart', ['data' => $data]);
     // Unduh file PDF
-    return response()->streamDownload(fn() => print($pdf->output()), 'laporan_karyawan.pdf');
+    return response()->streamDownload(fn() => print($pdf->output()), 'laporan_Cart.pdf');
     }
 }
