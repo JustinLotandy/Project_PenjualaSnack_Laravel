@@ -118,7 +118,7 @@ public static function kategoripenjualan()
     ->join('produks as p', 'p.kategori', '=', 'k.kode_kategori')
     ->join('transaction_details as td', 'td.kode_product', '=', 'p.kode_produk')
     ->join('transaksis as t', 't.kode_transaksi', '=', 'td.kode_transaksi')
-    ->groupBy('k.Nama_kategori', 'p.kode_produk', 'p.nama_produk') // Tambahkan p.nama_produk di sini
+    ->groupBy('k.Nama_kategori', 'p.kode_produk', 'p.nama_produk') 
     ->orderBy('k.Nama_kategori')
     ->orderBy('p.kode_produk')
     ->get();
