@@ -1,58 +1,63 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laporan Penjualan Berdasarkan Kategori</title>
     <style>
         body { font-family: Arial, sans-serif; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
-        .header, .footer { text-align: center; margin: 20px 0; }
-        .footer { font-size: 0.9em; color: #555; }
+        .header, .footer { text-align: center; }
+        .table { width: 100%; border-collapse: collapse; }
+        .table, .table th, .table td { border: 1px solid black; padding: 8px; }
+        .table th { background-color: #f2f2f2; }
+        .summary { font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- Report Header -->
+    {{-- Report Header --}}
     <div class="header">
         <h2>Laporan Penjualan Berdasarkan Kategori</h2>
-        <p>Tanggal Cetak: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
-        <p>Laporan ini menampilkan jumlah produk dan total penjualan per kategori</p>
+        <p>Tanggal: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
     </div>
 
-    <!-- Detail Section (Main Table) -->
-    <table>
-        <thead>
-            <tr>
-                <th>Nama Kategori</th>
-                <th>Jumlah Produk</th>
-                <th>Total Penjualan (Rp)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @php
-                $grandTotalPenjualan = 0;
-            @endphp
-
-            @foreach ($data as $row)
+    {{-- Detail Section --}}
+    @foreach($data->groupBy('kategori') as $kategori => $produks)
+        <h3>Kategori: {{ $kategori }}</h3>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>{{ $row->Nama_kategori }}</td>
-                    <td>{{ $row->jumlah_produk }}</td>
-                    <td>Rp {{ number_format($row->total_penjualan, 0, ',', '.') }}</td>
+                    <th>Kode Produk</th>
+                    <th>Nama Produk</th>
+                    <th>Total Penjualan</th>
                 </tr>
-
+            </thead>
+            <tbody>
                 @php
-                    $grandTotalPenjualan += $row->total_penjualan;
+                    $totalPenjualanKategori = 0;
                 @endphp
-            @endforeach
-        </tbody>
-    </table>
+                @foreach($produks as $produk)
+                    <tr>
+                        <td>{{ $produk->kode_produk }}</td>
+                        <td>{{ $produk->nama_produk }}</td>
+                        <td>{{ number_format($produk->total_penjualan_kategori, 0, ',', '.') }}</td>
+                    </tr>
+                    @php
+                        $totalPenjualanKategori += $produk->total_penjualan_kategori;
+                    @endphp
+                @endforeach
+                <tr class="summary">
+                    <td colspan="2" style="text-align: right;">Total Penjualan {{ $kategori }}:</td>
+                    <td>{{ number_format($totalPenjualanKategori, 0, ',', '.') }}</td>
+                </tr>
+            </tbody>
+        </table>
+    @endforeach
 
-    <!-- Report Footer -->
+    {{-- Report Footer --}}
     <div class="footer">
-        <p><strong>Total Keseluruhan Penjualan:</strong> Rp {{ number_format($grandTotalPenjualan, 0, ',', '.') }}</p>
-        <p>Laporan ini dihasilkan secara otomatis oleh sistem pada tanggal cetak di atas.</p>
+        <p>Dicetak pada: {{ \Carbon\Carbon::now()->format('d-m-Y H:i:s') }}</p>
+        <p>&copy; {{ date('Y') }} Nama Perusahaan Anda</p>
     </div>
 
 </body>

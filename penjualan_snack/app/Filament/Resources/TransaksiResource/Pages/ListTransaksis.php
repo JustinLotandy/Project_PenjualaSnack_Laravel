@@ -109,24 +109,28 @@ public static function kategoripenjualan()
 {
     // Ambil data transaksi berdasarkan kategori
     $data = \DB::table('kategoris as k')
-        ->selectRaw('
-            k.Nama_kategori,
-            COUNT(p.kode_produk) AS jumlah_produk,
-            SUM(td.QTY * td.Price) AS total_penjualan
-        ')
-        ->join('produks as p', 'p.kategori', '=', 'k.kode_kategori')
-        ->join('transaction_details as td', 'td.kode_product', '=', 'p.kode_produk')
-        ->join('transaksis as t', 't.kode_transaksi', '=', 'td.kode_transaksi')
-        ->groupBy('k.Nama_kategori')
-        ->orderByRaw('total_penjualan DESC')
-        ->get();
+    ->selectRaw('
+        k.Nama_kategori AS kategori,
+        p.kode_produk,
+        p.nama_produk,
+        SUM(td.QTY * td.Price) AS total_penjualan_kategori
+    ')
+    ->join('produks as p', 'p.kategori', '=', 'k.kode_kategori')
+    ->join('transaction_details as td', 'td.kode_product', '=', 'p.kode_produk')
+    ->join('transaksis as t', 't.kode_transaksi', '=', 'td.kode_transaksi')
+    ->groupBy('k.Nama_kategori', 'p.kode_produk', 'p.nama_produk') // Tambahkan p.nama_produk di sini
+    ->orderBy('k.Nama_kategori')
+    ->orderBy('p.kode_produk')
+    ->get();
 
-    // Load view untuk cetak PDF
-    $pdf = PDF::loadView('laporan.PenjualanKategori', ['data' => $data]);
 
-    // Unduh file PDF
-    return response()->streamDownload(fn() => print($pdf->output()), 'Laporan_Penjualan_Berdasarkan_Kategori.pdf');
+// Load view untuk cetak PDF
+$pdf = PDF::loadView('laporan.PenjualanKategori', ['data' => $data]);
+
+// Unduh file PDF
+return response()->streamDownload(fn() => print($pdf->output()), 'Laporan_Penjualan_Berdasarkan_Kategori.pdf');
+
+
+
 }
-
-
 }
