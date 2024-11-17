@@ -12,6 +12,13 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use PhpParser\Node\Stmt\Label;
+use Filament\Tables\Actions\Action;
+use Maatwebsite\Excel\Facades\Excel;
+use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Facades\Storage;
+use Filament\Notifications\Notification;
+use App\Imports\TransaksiImport;
 
 class TransaksiResource extends Resource
 {
@@ -40,7 +47,7 @@ class TransaksiResource extends Resource
             ->maxLength(11),
             
             Forms\components\TextInput::make('userid')
-            ->label("User ID")
+            ->label("Kode Cart")
             ->required()
             ->maxLength(11),
 
@@ -120,7 +127,7 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('userid')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('userid')->label('Kode Cart')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total_berat')->sortable()->searchable(),
@@ -140,6 +147,31 @@ class TransaksiResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
+            ])
+            ->headerActions([
+                Action::make('importExcel')
+                    ->label('Import Excel')
+                    ->action(function (array $data) {
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new TransaksiImport, $filePath);
+
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
+                    })
+                    ->form([
+                        FileUpload::make('file')
+                            ->label('Pilih File Excel')
+                            ->disk('public')
+                            ->directory('imports')
+                            ->acceptedFileTypes(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'])
+                            ->required(),
+                    ])
+                    ->modalHeading('Import Data Transaksi')
+                    ->modalButton('Import')
+                    ->color('success'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
