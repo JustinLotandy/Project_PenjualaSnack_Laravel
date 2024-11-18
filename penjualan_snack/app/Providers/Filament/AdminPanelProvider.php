@@ -2,6 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\penjualanperkategori;
+use App\Filament\Widgets\perkota;
+use App\Filament\Widgets\Profitperbulan;
+use App\Filament\Widgets\statustransaksi;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -17,6 +21,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Widgets\PenjualanGrowthChart;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -39,6 +44,11 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
+                PenjualanGrowthChart::class,
+                Profitperbulan::class,
+                perkota::class,
+                statustransaksi::class,
+                // penjualanperkategori::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -50,6 +60,7 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+
             ])
             ->authMiddleware([
                 Authenticate::class,
