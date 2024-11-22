@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\DataBank;
+use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 
 class data_bankSeeder extends Seeder
@@ -14,14 +14,24 @@ class data_bankSeeder extends Seeder
      */
     public function run(): void
     {   
-        DataBank::query()->delete();
-        $databank = new DataBank;
-        $databank->kode_databank=1;
-        $databank->norek='126543212';
-        $databank->nama_databank='Hardy';
-        $databank->file='buktitransaksi.pdf';
-        $databank->created_at=Carbon::now();
-        $databank->created_by='Budi';
-        $databank->save();
+    
+        $dataBankData = [
+            [
+                'kode_databank' => 1,
+                'norek' => '126543212',
+                'nama_databank' => 'Hardy',
+                'file' => 'images/Bukti.png',
+                'created_at' => Carbon::now(),
+                'created_by' => 'Budi',
+            ],
+        ];
+        foreach ($dataBankData as $item) {
+            
+            if (Storage::disk('public')->exists($item['file'])) {
+                DataBank::create($item);
+            } else {
+                echo "File {$item['file']} tidak ditemukan di storage/public/uploads/images.\n";
+            }
+        }
     }
 }

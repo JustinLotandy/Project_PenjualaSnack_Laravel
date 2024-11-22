@@ -6,6 +6,7 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Produk;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class ProdukSeeder extends Seeder
 {
@@ -14,89 +15,96 @@ class ProdukSeeder extends Seeder
      */
     public function run(): void
     {
-        $data_produk = new Produk; 
-        $data_produk->kode_produk = 'P-004';  
-        $data_produk->Userid = 'US-001';
-        $data_produk->Created_by = 'Butet'; 
-        $data_produk->kategori = 1;
-        $data_produk->Isi = '100'; 
-        $data_produk->ukuran = '10cm'; 
-        $data_produk->Expired = '2024-12-31'; 
-        $data_produk->Berat = 250; 
-        $data_produk->Deskirpsi = 'Snack kentang rasa balado'; 
-        $data_produk->nama_produk = 'Kentangs'; 
-        $data_produk->file = 'image.jpg'; 
-        $data_produk->Created_at = Carbon::now();  
-        $data_produk->Stok = 100; 
-        $data_produk->Harga = 15000; 
-        $data_produk->save(); 
+        $produkData = [
+            [
+                'kode_produk' => 'P-004',
+                'userid' => 'US-001',
+                'created_by' => 'Butet',
+                'kategori' => 1,
+                'isi' => '100',
+                'ukuran' => '10cm',
+                'expired' => '2024-12-31',
+                'berat' => 250,
+                'Deskirpsi' => 'Snack kentang rasa balado',
+                'nama_produk' => 'Kentangs',
+                'file' => 'images/Kentang.png',
+                'created_at' => Carbon::now(),
+                'stok' => 100,
+                'harga' => 15000,
+            ],
+            [
+                'kode_produk' => 'P-005',
+                'userid' => 'US-001',
+                'created_by' => 'Butet',
+                'kategori' => 1,
+                'isi' => '100',
+                'ukuran' => '10cm',
+                'expired' => '2024-12-31',
+                'berat' => 250,
+                'Deskirpsi' => 'Popcorn',
+                'nama_produk' => 'Popcorn',
+                'file' => 'images/Popcorn.png',
+                'created_at' => Carbon::now(),
+                'stok' => 100,
+                'harga' => 15000,
+            ],
+            [
+                'kode_produk' => 'P-001',
+                'userid' => 'US-001',
+                'created_by' => 'Butet',
+                'kategori' => 1,
+                'isi' => '100',
+                'ukuran' => '10cm',
+                'expired' => '2024-12-31',
+                'berat' => 250,
+                'Deskirpsi' => 'Dry snack - Potato Chips',
+                'nama_produk' => 'Kentangs',
+                'file' => 'images/Chips.png',
+                'created_at' => Carbon::now(),
+                'stok' => 100,
+                'harga' => 15000,
+            ],
+            [
+                'kode_produk' => 'P-002',
+                'userid' => 'US-002',
+                'created_by' => 'Butet',
+                'kategori' => 2,
+                'isi' => '150',
+                'ukuran' => '15cm',
+                'expired' => '2025-01-31',
+                'berat' => 300,
+                'Deskirpsi' => 'Wet snack - Pudding',
+                'nama_produk' => 'Pudding',
+                'file' => 'images/Pudding.png',
+                'created_at' => Carbon::now(),
+                'stok' => 200,
+                'harga' => 12000,
+            ],
+            [
+                'kode_produk' => 'P-003',
+                'userid' => 'US-001',
+                'created_by' => 'Butet',
+                'kategori' => 1,
+                'isi' => '50',
+                'ukuran' => '8cm',
+                'expired' => '2024-11-30',
+                'berat' => 100,
+                'Deskirpsi' => 'Dry snack - Biscuits',
+                'nama_produk' => 'Biscuits',
+                'file' => 'images/Bisquit.png',
+                'created_at' => Carbon::now(),
+                'stok' => 150,
+                'harga' => 10000,
+            ],
+        ];
 
-        $data_produk = new Produk; 
-        $data_produk->kode_produk = 'P-005';  
-        $data_produk->Userid = 'US-001';
-        $data_produk->Created_by = 'Butet'; 
-        $data_produk->kategori = 1;
-        $data_produk->Isi = '100'; 
-        $data_produk->ukuran = '10cm'; 
-        $data_produk->Expired = '2024-12-31'; 
-        $data_produk->Berat = 250; 
-        $data_produk->Deskirpsi = 'Poporn'; 
-        $data_produk->nama_produk = 'popcorn'; 
-        $data_produk->file = 'image.jpg'; 
-        $data_produk->Created_at = Carbon::now();  
-        $data_produk->Stok = 100; 
-        $data_produk->Harga = 15000; 
-        $data_produk->save();
-
-        $data_produk = new Produk;
-        $data_produk->kode_produk = 'P-001';
-        $data_produk->Userid = 'US-001';
-        $data_produk->Created_by = 'Butet';
-        $data_produk->kategori = 1;
-        $data_produk->Isi = '100'; 
-        $data_produk->ukuran = '10cm'; 
-        $data_produk->Expired = '2024-12-31'; 
-        $data_produk->Berat = 250; 
-        $data_produk->Deskirpsi = 'Dry snack - Potato Chips'; // Sama dengan deskripsi di tabel cart
-        $data_produk->nama_produk = 'Kentangs';
-        $data_produk->file = 'image.jpg'; 
-        $data_produk->Created_at = Carbon::now();  
-        $data_produk->Stok = 100; 
-        $data_produk->Harga = 15000; 
-        $data_produk->save();
-
-        $data_produk = new Produk;
-        $data_produk->kode_produk = 'P-002';
-        $data_produk->Userid = 'US-002';
-        $data_produk->Created_by = 'Butet';
-        $data_produk->kategori = 2;
-        $data_produk->Isi = '150'; 
-        $data_produk->ukuran = '15cm'; 
-        $data_produk->Expired = '2025-01-31'; 
-        $data_produk->Berat = 300; 
-        $data_produk->Deskirpsi = 'Wet snack - Pudding'; // Sama dengan deskripsi di tabel cart
-        $data_produk->nama_produk = 'Pudding';
-        $data_produk->file = 'pudding.jpg'; 
-        $data_produk->Created_at = Carbon::now();  
-        $data_produk->Stok = 200; 
-        $data_produk->Harga = 12000; 
-        $data_produk->save();
-
-        $data_produk = new Produk;
-        $data_produk->kode_produk = 'P-003';
-        $data_produk->Userid = 'US-001';
-        $data_produk->Created_by = 'Butet';
-        $data_produk->kategori = 1;
-        $data_produk->Isi = '50'; 
-        $data_produk->ukuran = '8cm'; 
-        $data_produk->Expired = '2024-11-30'; 
-        $data_produk->Berat = 100; 
-        $data_produk->Deskirpsi = 'Dry snack - Biscuits'; // Sama dengan deskripsi di tabel cart
-        $data_produk->nama_produk = 'Biscuits';
-        $data_produk->file = 'biscuits.jpg'; 
-        $data_produk->Created_at = Carbon::now();  
-        $data_produk->Stok = 150; 
-        $data_produk->Harga = 10000; 
-        $data_produk->save();
+        foreach ($produkData as $item) {
+            // Pastikan file gambar ada
+            if (Storage::disk('public')->exists($item['file'])) {
+                Produk::create($item);
+            } else {
+                echo "File {$item['file']} tidak ditemukan di storage/public/uploads/files.\n";
+            }
+        }
     }
 }

@@ -19,6 +19,9 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\ProdukImport;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+
 
 class ProdukResource extends Resource
 {
@@ -41,18 +44,18 @@ class ProdukResource extends Resource
         return $form
             ->schema([
 
-                Forms\components\TextInput::make('kode_product')
+                Forms\components\TextInput::make('kode_produk')
                 ->label("Kode Produk")
                 ->required()
                 ->maxLength(11),
 
-                Forms\components\TextInput::make('kode_pengguna')
+                Forms\components\TextInput::make('Userid')
                 ->label("User ID")
                 ->required()
                 ->maxLength(11),
                 
                 
-                Forms\components\TextInput::make('kategori')
+                Forms\components\TextInput::make('Kategori')
                 ->label("Kategori")
                 ->required()
                 ->maxLength(225),
@@ -87,13 +90,12 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(225),
 
-                Forms\Components\FileUpload::make('file') 
-                ->label('File')
-                ->image() 
-                ->required() 
-                ->disk('public')
-                ->directory('images')
-                ->visibility('public'),
+                FileUpload::make('file')
+                    ->label('Upload File')
+                    ->acceptedFileTypes(['image/png', 'image/jpeg'])
+                    ->directory('uploads/images') 
+                    ->visibility('public') 
+                    ->required(), 
 
                 Forms\components\DateTimePicker::make('Created_at')
                 ->label("Created At")
@@ -123,6 +125,10 @@ class ProdukResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('Created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_produk')->sortable()->searchable(),
+                ImageColumn::make('file') 
+                ->width(100)
+                ->disk('public') 
+                ->url(fn($record) => Storage::disk('public')->url($record->image)),
                 Tables\Columns\TextColumn::make('Userid')->label('User ID')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
@@ -131,9 +137,6 @@ class ProdukResource extends Resource
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Deskirpsi')->label('Deskripsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama_produk')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
-                    return basename($state); 
-                })          ->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Stok')->sortable()->searchable(),

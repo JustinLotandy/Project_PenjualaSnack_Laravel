@@ -5,9 +5,9 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Laporan Pengguna</title>
  <style>
- body { font-family: Arial, sans-serif; }
- table { width: 100%; border-collapse: collapse; }
- th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
+    body { font-family: Arial, sans-serif; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px; text-align: left; border: 1px solid #ddd; }
  </style>
 </head>
 <body>
@@ -18,7 +18,7 @@
             <th>Kode Databank</th>
             <th>Nomor Rekening</th>
             <th>Nama Databank</th>
-            <th>File</th>
+            <th>Bukti Transaksi</th>
             <th>Created At</th>
             <th>Created By</th>
         </tr>

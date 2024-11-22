@@ -19,6 +19,7 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\TransaksiImport;
+use Filament\Tables\Columns\ImageColumn;
 
 class TransaksiResource extends Resource
 {
@@ -46,7 +47,7 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(11),
             
-            Forms\components\TextInput::make('userid')
+            Forms\components\TextInput::make('kode_cart')
             ->label("Kode Cart")
             ->required()
             ->maxLength(11),
@@ -101,20 +102,24 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(225),
 
-            Forms\components\TextInput::make('Bukti_tansaksi')
-            ->label("Bukti Transaksi")
-            ->required()
-            ->maxLength(225),
+            FileUpload::make('Bukti_tansaksi')
+                    ->label('Upload File')
+                    ->acceptedFileTypes(['image/png', 'image/jpeg'])
+                    ->directory('uploads/images') 
+                    ->visibility('public') 
+                    ->required(), 
 
-            Forms\components\TextInput::make('Status')
-            ->label("Status")
-            ->required()
-            ->maxLength(225),
+            Forms\components\Select::make('Status')
+            ->label('Status')
+                ->options([
+                    'pending' => 'Pending',
+                    'approved' => 'Approved',
+                    'rejected' => 'Rejected',
+                ]),
 
             Forms\components\DateTimePicker::make('Date')
             ->label("Date")
-            ->required()
-            ,
+            ->required(),
 
             Forms\components\TextInput::make('Adress')
             ->label("Adress")
@@ -127,7 +132,7 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('userid')->label('Kode Cart')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_cart')->label('Kode Cart')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total_berat')->sortable()->searchable(),
@@ -137,7 +142,10 @@ class TransaksiResource extends Resource
                 Tables\Columns\TextColumn::make('Kota')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ongkir')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Bukti_tansaksi')->sortable()->searchable(),
+                ImageColumn::make('Bukti_tansaksi') 
+                ->width(100)
+                ->disk('public') 
+                ->url(fn($record) => Storage::disk('public')->url($record->image)),
                 Tables\Columns\TextColumn::make('Status')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Date')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Adress')->sortable()->searchable(),

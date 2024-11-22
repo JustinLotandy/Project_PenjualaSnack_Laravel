@@ -17,7 +17,7 @@
         <tr>
             <th>Kode Transaksi</th>
             <th>Kode Databank</th>
-            <th>User ID</th>
+            <th>Kode Cart</th>
             <th>Nama Produk</th>
             <th>Total Berat</th>
             <th>Phone</th>
@@ -37,7 +37,7 @@
             <tr>
                 <td>{{ $transaksi->kode_transaksi }}</td>
                 <td>{{ $transaksi->kode_databank }}</td>
-                <td>{{ $transaksi->userid }}</td>
+                <td>{{ $transaksi->kode_cart }}</td>
                 <td>{{ $transaksi->nama_produk }}</td>
                 <td>{{ $transaksi->Total_berat }}</td>
                 <td>{{ $transaksi->Phone }}</td>

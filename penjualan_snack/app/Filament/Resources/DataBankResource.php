@@ -18,6 +18,9 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\DataBankImport;
+use Filament\Tables\Columns\ImageColumn;
+use Filament\Tables\Columns\TextColumn;
+
 
 class DataBankResource extends Resource
 {
@@ -53,13 +56,12 @@ class DataBankResource extends Resource
                 ->maxLength(16),
             
 
-                Forms\Components\FileUpload::make('file') 
-                ->label('File')
-                ->image() 
-                ->required() 
-                ->disk('public')
-                ->directory('product-images')
-                ->visibility('public'), 
+                FileUpload::make('file')
+                ->label('Upload Gambar')
+                ->acceptedFileTypes(['image/png', 'image/jpeg'])
+                ->directory('uploads/images') 
+                ->visibility('public') 
+                ->required(), 
 
                 Forms\components\DateTimePicker::make('created_at')
                 ->label("CreatedAt")
@@ -81,9 +83,11 @@ class DataBankResource extends Resource
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('norek')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('file')->label('Gambar Produk')->formatStateUsing(function (string $state) {
-        return basename($state); 
-    })          ->sortable()->searchable(),
+                ImageColumn::make('file') 
+                ->width(100)
+                ->height(100)
+                ->disk('public') 
+                ->url(fn($record) => Storage::disk('public')->url($record->image)),
                 Tables\Columns\TextColumn::make('created_by')->sortable()->searchable(),
                 
             ])

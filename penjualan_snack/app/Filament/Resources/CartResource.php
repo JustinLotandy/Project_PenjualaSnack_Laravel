@@ -41,7 +41,7 @@ class CartResource extends Resource
                 ->required()
                 ->maxLength(20),
 
-                Forms\components\TextInput::make('Kode_pengguna')
+                Forms\components\TextInput::make('kode_pengguna')
                 ->label("Kode pengguna")
                 ->required()
                 ->maxLength(20),

@@ -18,7 +18,7 @@ class TransaksiImport implements ToModel, WithHeadingRow
     {
         return new Transaksi([
             'kode_transaksi' => $row['kode_transaksi'] ,
-            'Userid' => $row['userid'] ,
+            'kode_cart' => $row['kode_cart'] ,
             'kode_databank' => $row['kode_databank'] ,
             'nama_produk' => $row['nama_produk'] ,
             'Total_berat' => $row['total_berat'],

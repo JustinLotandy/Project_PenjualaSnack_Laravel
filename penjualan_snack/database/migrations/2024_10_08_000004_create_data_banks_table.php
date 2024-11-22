@@ -15,7 +15,7 @@ return new class extends Migration
             $table->char('kode_databank')->primary();
             $table->char('norek', length: 255); 
             $table->char('nama_databank', length: 255); 
-            $table->char('file', length: 255); 
+            $table->string('file')->nullable();; 
             $table->datetime('created_at'); 
             $table->char('created_by', length: 255); 
         });

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transaksis', function (Blueprint $table) {
             $table->char('kode_transaksi',length:50)->primary();
             $table->char('kode_databank');
-            $table->char('userid'); 
+            $table->char('kode_cart'); 
             $table->char('nama_produk');
             $table->integer('Total_berat');
             $table->char('Phone', length: 255);
@@ -24,18 +24,16 @@ return new class extends Migration
             $table->integer('Ongkir');
             $table->integer('Total');
             $table->char('Bukti_tansaksi');
-            $table->char('Status', length: 255);
+            $table->enum('Status',  ['pending', 'approved', 'rejected']);
             $table->dateTime('Date');
             $table->char('Adress');
             
             $table->foreign('kode_databank')->references('kode_databank')->on('data_banks');
-            $table->foreign('userid')->references('kode_cart')->on('carts');
+            $table->foreign('kode_cart')->references('kode_cart')->on('carts');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('transaksis');

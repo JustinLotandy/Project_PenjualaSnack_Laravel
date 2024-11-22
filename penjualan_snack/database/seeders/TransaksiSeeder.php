@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Transaksi; 
 use Carbon\Carbon;
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class TransaksiSeeder extends Seeder
 {
@@ -14,98 +14,103 @@ class TransaksiSeeder extends Seeder
      */
     public function run(): void
     {
-        $data_transaksi = new Transaksi;
-        $data_transaksi->kode_transaksi = 'TRK-0001';
-        $data_transaksi->kode_databank = 1;
-        $data_transaksi->userid = 'CART001'; // Sama dengan cart
-        $data_transaksi->nama_produk = 'Potato Chips';
-        $data_transaksi->Total_berat = 500; // Misal dalam gram
-        $data_transaksi->Phone = '081234567890';
-        $data_transaksi->No_resi = 'RESI-001';
-        $data_transaksi->Kurir = 'JNE';
-        $data_transaksi->Kota = 'Jakarta';
-        $data_transaksi->Ongkir = 15000; // Misal dalam rupiah
-        $data_transaksi->Total = 65000; // Total setelah ongkir
-        $data_transaksi->Bukti_tansaksi = 'BUKTI-001';
-        $data_transaksi->Status = 'Pending';
-        $data_transaksi->Date = Carbon::now();
-        $data_transaksi->Adress = 'Jalan Contoh No.1';
-        $data_transaksi->save();
+        // Data transaksi
+        $transaksiData = [
+            [
+                'kode_transaksi' => 'TRK-0001',
+                'kode_databank' => 1,
+                'kode_cart' => 'CART001',
+                'nama_produk' => 'Potato Chips',
+                'total_berat' => 500,
+                'phone' => '081234567890',
+                'no_resi' => 'RESI-001',
+                'kurir' => 'JNE',
+                'kota' => 'Jakarta',
+                'ongkir' => 15000,
+                'total' => 65000,
+                'bukti_tansaksi' => 'images/Bukti.png',
+                'status' => 'Pending',
+                'date' => Carbon::now(),
+                'Adress' => 'Jalan Contoh No.1',
+            ],
+            [
+                'kode_transaksi' => 'TRK-0002',
+                'kode_databank' => 1,
+                'kode_cart' => 'CART002',
+                'nama_produk' => 'Pudding',
+                'total_berat' => 300,
+                'phone' => '081234567891',
+                'no_resi' => 'RESI-002',
+                'kurir' => 'Tiki',
+                'kota' => 'Bandung',
+                'ongkir' => 12000,
+                'total' => 42000,
+                'bukti_tansaksi' => 'images/Bukti.png',
+                'status' => 'approved',
+                'date' => Carbon::now(),
+                'Adress' => 'Jalan Contoh No.2',
+            ],
+            [
+                'kode_transaksi' => 'TRK-0003',
+                'kode_databank' => 1,
+                'kode_cart' => 'CART003',
+                'nama_produk' => 'Biscuits',
+                'total_berat' => 400,
+                'phone' => '081234567892',
+                'no_resi' => 'RESI-003',
+                'kurir' => 'JNE',
+                'kota' => 'Surabaya',
+                'ongkir' => 20000,
+                'total' => 60000,
+                'bukti_tansaksi' => 'images/Bukti.png',
+                'status' => 'Pending',
+                'date' => Carbon::now(),
+                'Adress' => 'Jalan Contoh No.3',
+            ],
+            [
+                'kode_transaksi' => 'TRK-0004',
+                'kode_databank' => 1,
+                'kode_cart' => 'CART004',
+                'nama_produk' => 'Jelly',
+                'total_berat' => 250,
+                'phone' => '081234567893',
+                'no_resi' => 'RESI-004',
+                'kurir' => 'Tiki',
+                'kota' => 'Yogyakarta',
+                'ongkir' => 10000,
+                'total' => 35000,
+                'bukti_tansaksi' => 'images/Bukti.png',
+                'status' => 'approved',
+                'date' => Carbon::now(),
+                'Adress' => 'Jalan Contoh No.4',
+            ],
+            [
+                'kode_transaksi' => 'TRK-0005',
+                'kode_databank' => 1,
+                'kode_cart' => 'CART005',
+                'nama_produk' => 'Popcorn',
+                'total_berat' => 200,
+                'phone' => '081234567894',
+                'no_resi' => 'RESI-005',
+                'kurir' => 'JNE',
+                'kota' => 'Medan',
+                'ongkir' => 15000,
+                'total' => 35000,
+                'bukti_tansaksi' => 'images/Bukti.png',
+                'status' => 'Pending',
+                'date' => Carbon::now(),
+                'Adress' => 'Jalan Contoh No.5',
+            ],
+        ];
 
-    
-        $data_transaksi = new Transaksi;
-        $data_transaksi->kode_transaksi = 'TRK-0002';
-        $data_transaksi->kode_databank = 1;
-        $data_transaksi->userid = 'CART002';
-        $data_transaksi->nama_produk = 'Pudding';
-        $data_transaksi->Total_berat = 300; // Misal dalam gram
-        $data_transaksi->Phone = '081234567891';
-        $data_transaksi->No_resi = 'RESI-002';
-        $data_transaksi->Kurir = 'Tiki';
-        $data_transaksi->Kota = 'Bandung';
-        $data_transaksi->Ongkir = 12000;
-        $data_transaksi->Total = 42000;
-        $data_transaksi->Bukti_tansaksi = 'BUKTI-002';
-        $data_transaksi->Status = 'Confirmed';
-        $data_transaksi->Date = Carbon::now();
-        $data_transaksi->Adress = 'Jalan Contoh No.2';
-        $data_transaksi->save();
-
-        
-        $data_transaksi = new Transaksi;
-        $data_transaksi->kode_transaksi = 'TRK-0003';
-        $data_transaksi->kode_databank = 1;
-        $data_transaksi->userid = 'CART003';
-        $data_transaksi->nama_produk = 'Biscuits';
-        $data_transaksi->Total_berat = 400;
-        $data_transaksi->Phone = '081234567892';
-        $data_transaksi->No_resi = 'RESI-003';
-        $data_transaksi->Kurir = 'JNE';
-        $data_transaksi->Kota = 'Surabaya';
-        $data_transaksi->Ongkir = 20000;
-        $data_transaksi->Total = 60000;
-        $data_transaksi->Bukti_tansaksi = 'BUKTI-003';
-        $data_transaksi->Status = 'Pending';
-        $data_transaksi->Date = Carbon::now();
-        $data_transaksi->Adress = 'Jalan Contoh No.3';
-        $data_transaksi->save();
-
-        
-        $data_transaksi = new Transaksi;
-        $data_transaksi->kode_transaksi = 'TRK-0004';
-        $data_transaksi->kode_databank = 1;
-        $data_transaksi->userid = 'CART004';
-        $data_transaksi->nama_produk = 'Jelly';
-        $data_transaksi->Total_berat = 250;
-        $data_transaksi->Phone = '081234567893';
-        $data_transaksi->No_resi = 'RESI-004';
-        $data_transaksi->Kurir = 'Tiki';
-        $data_transaksi->Kota = 'Yogyakarta';
-        $data_transaksi->Ongkir = 10000;
-        $data_transaksi->Total = 35000;
-        $data_transaksi->Bukti_tansaksi = 'BUKTI-004';
-        $data_transaksi->Status = 'Confirmed';
-        $data_transaksi->Date = Carbon::now();
-        $data_transaksi->Adress = 'Jalan Contoh No.4';
-        $data_transaksi->save();
-
-       
-        $data_transaksi = new Transaksi;
-        $data_transaksi->kode_transaksi = 'TRK-0005';
-        $data_transaksi->kode_databank = 1;
-        $data_transaksi->userid = 'CART005';
-        $data_transaksi->nama_produk = 'Popcorn';
-        $data_transaksi->Total_berat = 200;
-        $data_transaksi->Phone = '081234567894';
-        $data_transaksi->No_resi = 'RESI-005';
-        $data_transaksi->Kurir = 'JNE';
-        $data_transaksi->Kota = 'Medan';
-        $data_transaksi->Ongkir = 15000;
-        $data_transaksi->Total = 35000;
-        $data_transaksi->Bukti_tansaksi = 'BUKTI-005';
-        $data_transaksi->Status = 'Pending';
-        $data_transaksi->Date = Carbon::now();
-        $data_transaksi->Adress = 'Jalan Contoh No.5';
-        $data_transaksi->save();
+        // Simpan data transaksi ke database
+        foreach ($transaksiData as $item) {
+            // Pastikan file gambar ada
+            if (Storage::disk('public')->exists($item['bukti_tansaksi'])) {
+                Transaksi::create($item);
+            } else {
+                echo "File {$item['bukti_tansaksi']} tidak ditemukan di storage/public/uploads/images.\n";
+            }
+        }
     }
 }
