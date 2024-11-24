@@ -24,8 +24,8 @@ class TransactionDetailResource extends Resource
 {
     protected static ?string $model = TransactionDetail::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    protected static ?string $navigationIcon = 'heroicon-o-newspaper';
+    protected static ?string $navigationGroup = 'Transaksi';
     public static function getModelLabel(): string
     {
         return 'Detail Transaksi'; 

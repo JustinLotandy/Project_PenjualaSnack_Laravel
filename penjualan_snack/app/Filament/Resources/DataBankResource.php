@@ -26,7 +26,9 @@ class DataBankResource extends Resource
 {
     protected static ?string $model = DataBank::class;
     
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+
+    protected static ?string $navigationGroup = 'Data Dan Pengguna';
 
     public static function getModelLabel():string{
         return'Data Bank';

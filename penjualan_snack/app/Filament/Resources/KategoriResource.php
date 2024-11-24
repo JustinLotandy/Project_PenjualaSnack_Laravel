@@ -23,7 +23,10 @@ class KategoriResource extends Resource
 {
     protected static ?string $model = Kategori::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-squares-2x2';
+
+    protected static ?string $navigationGroup = 'Produk';
+
 
     public static function getModelLabel(): string
     {
