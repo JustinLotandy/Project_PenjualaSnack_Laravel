@@ -12,4 +12,17 @@ class Cart extends Model
 
     protected $primaryKey = 'kode_cart';
     public $incrementing = false;
+
+    public function produk()
+{
+    return $this->belongsTo(Produk::class, 'kode_produk');
 }
+
+public function Pengguna()
+{
+    return $this->belongsTo(Produk::class, 'kode_pengguna');
+}
+
+}
+
+

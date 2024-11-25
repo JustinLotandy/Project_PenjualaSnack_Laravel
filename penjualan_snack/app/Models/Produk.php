@@ -13,4 +13,10 @@ class Produk extends Model
 
     protected $primaryKey = 'kode_produk';
     public $incrementing = false;
+
+    public function Cart()
+{
+    return $this->hasMany(Cart::class, 'kode_produk');
+}
+
 }
