@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\TransaksiImport;
 use Filament\Tables\Columns\ImageColumn;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Select;
 
 class TransaksiResource extends Resource
 {

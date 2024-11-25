@@ -3,40 +3,43 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CartResource\Pages;
+use App\Filament\Resources\CartResource\RelationManagers;
 use App\Models\Cart;
 use App\Imports\CartImport;
 use Filament\Forms;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\Action;
-use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Filament\Forms\Components\FileUpload;
+use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
+use Filament\Forms\Components\Select;
 
 class CartResource extends Resource
 {
     protected static ?string $model = Cart::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
     protected static ?string $navigationGroup = 'Transaksi';
-
-    public static function getModelLabel(): string
-    {
+    public static function getModelLabel():string{
         return 'Keranjang';
     }
 
-    public static function getPluralModelLabel(): string
-    {
-        return 'Keranjang';
+    public static function getPluralModelLabel():string{
+        return'Keranjang';
     }
-
-    public static function form(Forms\Form $form): Forms\Form
+    public static function form(Form $form): Form
     {
-        return $form->schema([
-            Forms\Components\TextInput::make('kode_cart')
+        return $form
+            ->schema([
+                
+                Forms\components\TextInput::make('kode_cart')
                 ->label("Kode Cart")
                 ->required()
                 ->maxLength(20),
@@ -45,44 +48,54 @@ class CartResource extends Resource
                 ->label('Kode Pengguna')
                 ->options(function () {
                     return \App\Models\Pengguna::all()->mapWithKeys(function ($pengguna) {
-                        return [$pengguna->kode_pengguna => "{$pengguna->kode_pengguna}"];
+                        return [$pengguna->kode_pengguna => "{$pengguna->kode_pengguna} - {$pengguna->Username}"];
                     });
+                })
+                ->getOptionLabelUsing(function ($value) {
+                    $pengguna = \App\Models\Pengguna::where('kode_pengguna', $value)->first();
+                    return $pengguna ? "{$pengguna->kode_pengguna} - {$pengguna->Username}" : $value;
                 })
                 ->searchable()
                 ->required(),
+                
 
-            Select::make('Product_id')
+                Select::make('Product_id') 
                 ->label('Kode Produk')
                 ->options(function () {
-                    return \App\Models\Produk::all()->mapWithKeys(function ($produk) {
-                        return [$produk->kode_produk => "{$produk->kode_produk}"];
+                    return \App\Models\Produk::all()->pluck('Nama_produk', 'kode_produk')->map(function ($nama_produk, $kode_produk) {
+                        return "{$kode_produk} - {$nama_produk}";
                     });
                 })
-                ->searchable()
-                ->required(),
+                ->searchable(),
+               
+            
 
-            Forms\Components\TextInput::make('QTY')
+                Forms\components\TextInput::make('QTY')
                 ->label("Kuantitas")
                 ->required()
                 ->maxLength(255),
-
-            Forms\Components\TextInput::make('Desc')
+                
+                Forms\components\TextInput::make('Desc')
                 ->label("Deskripsi")
                 ->required()
                 ->maxLength(500),
-        ]);
+            ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table->columns([
-            Tables\Columns\TextColumn::make('kode_cart')->sortable()->searchable(),
-            Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
-            Tables\Columns\TextColumn::make('kode_produk')->label('Kode Produk')->sortable()->searchable(),
-            Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
-            Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),
-        ])
-            ->filters([])
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('kode_cart')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Product_id')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),
+                
+            ])
+            ->filters([
+                //
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
@@ -91,21 +104,13 @@ class CartResource extends Resource
                 Action::make('importExcel')
                     ->label('Import Excel')
                     ->action(function (array $data) {
-                        try {
-                            $filePath = storage_path('app/public/' . $data['file']);
-                            Excel::import(new CartImport, $filePath);
+                        $filePath = storage_path('app/public/' . $data['file']);
+                        Excel::import(new CartImport, $filePath);
 
-                            Notification::make()
-                                ->title('Data berhasil diimpor!')
-                                ->success()
-                                ->send();
-                        } catch (\Exception $e) {
-                            Notification::make()
-                                ->title('Gagal mengimpor data!')
-                                ->body($e->getMessage())
-                                ->danger()
-                                ->send();
-                        }
+                        Notification::make()
+                            ->title('Data berhasil diimpor!')
+                            ->success()
+                            ->send();
                     })
                     ->form([
                         FileUpload::make('file')
@@ -120,13 +125,17 @@ class CartResource extends Resource
                     ->color('success'),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
             ]);
     }
 
     public static function getRelations(): array
     {
-        return [];
+        return [
+            //
+        ];
     }
 
     public static function getPages(): array
