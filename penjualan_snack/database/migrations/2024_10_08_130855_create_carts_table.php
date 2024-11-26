@@ -14,12 +14,17 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->char('kode_cart')->primary();
             $table->char('kode_pengguna',length: 255);
+            $table->char('kode_customer',length: 255);
+            $table->char('nama_customer',length: 255);
+            $table->char('phone',length: 255);
+            $table->char('nama_pengguna',length: 255);
             $table->char('Product_id', length: 255); 
             $table->char('QTY', length: 255);
             $table->char('Desc', length: 255);  
             $table->timestamps();
 
-            $table->foreign('Product_id')->references('kode_produk')->on('produks');
+            $table->foreign('Product_id')->references('kode_produk')->on('produks')->onUpdate('cascade');
+            $table->foreign('kode_customer')->references('kode_customer')->on('customers')->onUpdate('cascade');
         });
     }
 

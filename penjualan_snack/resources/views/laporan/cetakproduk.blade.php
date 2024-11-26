@@ -23,11 +23,14 @@
         border-radius: 5px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow: hidden;
+        table-layout: fixed; /* Set table layout to fixed */
     }
     th, td {
-        padding: 12px 15px;
+        padding: 8px; /* Reduce padding to save space */
         text-align: left;
         border-bottom: 1px solid #ddd;
+        word-wrap: break-word; /* Ensure text wraps within cells */
+        font-size: 10px; /* Reduce font size for better fit */
     }
     th {
         background-color: #28a745;
@@ -43,6 +46,15 @@
     tbody tr:nth-child(odd) {
         background-color: #fff;
     }
+    @media print {
+        body {
+            margin: 10px; /* Reduce margin for print layout */
+        }
+        table {
+            font-size: 9px; /* Further reduce font size for PDF */
+            border: 1px solid #000;
+        }
+    }
  </style>
 </head>
 <body>
@@ -50,20 +62,20 @@
     <table>
         <thead>
             <tr>
-                <th>Kode Produk</th>
-                <th>User ID</th>
-                <th>Kategori</th>
-                <th>Isi</th>
-                <th>Ukuran</th>
-                <th>Expired</th>
-                <th>Berat</th>
-                <th>Deskripsi</th>
-                <th>Nama Produk</th>
-                <th>File</th>
-                <th>Created At</th>
-                <th>Created By</th>
-                <th>Stok</th>
-                <th>Harga</th>
+                <th style="width: 7%;">Kode Produk</th>
+                <th style="width: 7%;">User ID</th>
+                <th style="width: 10%;">Kategori</th>
+                <th style="width: 10%;">Isi</th>
+                <th style="width: 8%;">Ukuran</th>
+                <th style="width: 10%;">Expired</th>
+                <th style="width: 7%;">Berat</th>
+                <th style="width: 15%;">Deskripsi</th>
+                <th style="width: 10%;">Nama Produk</th>
+                <th style="width: 7%;">File</th>
+                <th style="width: 8%;">Created At</th>
+                <th style="width: 7%;">Created By</th>
+                <th style="width: 7%;">Stok</th>
+                <th style="width: 7%;">Harga</th>
             </tr>
         </thead>
         <tbody>

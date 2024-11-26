@@ -47,17 +47,49 @@ class CartResource extends Resource
                 Select::make('kode_pengguna')
                 ->label('Kode Pengguna')
                 ->options(function () {
-                    return \App\Models\Pengguna::all()->mapWithKeys(function ($pengguna) {
-                        return [$pengguna->kode_pengguna => "{$pengguna->kode_pengguna} - {$pengguna->Username}"];
+                    // Membuat dropdown dengan opsi "kode_pengguna - Username"
+                 return \App\Models\Pengguna::all()->mapWithKeys(function ($pengguna) {
+                     return [$pengguna->kode_pengguna => "{$pengguna->kode_pengguna} - {$pengguna->Username}"];
                     });
                 })
-                ->getOptionLabelUsing(function ($value) {
-                    $pengguna = \App\Models\Pengguna::where('kode_pengguna', $value)->first();
-                    return $pengguna ? "{$pengguna->kode_pengguna} - {$pengguna->Username}" : $value;
+                ->reactive() // Memastikan dropdown reaktif
+                ->afterStateUpdated(function (callable $set, $state) {
+                    // Mengisi kolom nama_pengguna otomatis berdasarkan kode_pengguna
+                    $pengguna = \App\Models\Pengguna::where('kode_pengguna', $state)->first();
+                    $set('nama_pengguna', $pengguna ? $pengguna->Username : null);
                 })
-                ->searchable()
+                ->searchable() // Menambahkan fitur pencarian
                 ->required(),
-                
+
+                Forms\components\TextInput::make('nama_pengguna')
+                ->label("nama_pengguna")
+                ->required()
+                ->maxLength(20),
+
+                Select::make('kode_customer')
+    ->label('Kode Customer')
+    ->options(function () {
+        // Menampilkan hanya kode_customer di dropdown
+        return \App\Models\Customer::pluck('kode_customer', 'kode_customer');
+    })
+    ->reactive() // Agar perubahan langsung memicu event
+    ->afterStateUpdated(function (callable $set, $state) {
+        // Ambil Nama_customer dan phone berdasarkan kode_customer yang dipilih
+        $customer = \App\Models\Customer::where('kode_customer', $state)->first();
+        $set('nama_customer', $customer ? $customer->nama_customer : null);
+        $set('phone', $customer ? $customer->no_telepon : null);
+    }) 
+    ->required(),
+
+                Forms\components\TextInput::make('nama_customer')
+                ->label("Nama Customer")
+                ->required()
+                ->maxLength(255),
+
+                Forms\components\TextInput::make('phone')
+                ->label("Phone")
+                ->required()
+                ->maxLength(255),
 
                 Select::make('Product_id') 
                 ->label('Kode Produk')
@@ -68,7 +100,6 @@ class CartResource extends Resource
                 })
                 ->searchable(),
                
-            
 
                 Forms\components\TextInput::make('QTY')
                 ->label("Kuantitas")
@@ -88,6 +119,10 @@ class CartResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('kode_cart')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_pengguna')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_customer')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_customer')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('phone')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Product_id')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('QTY')->label('Kuantitas')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Desc')->label('Deskripsi')->sortable()->searchable(),

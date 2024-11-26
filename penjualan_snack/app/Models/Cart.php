@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Cart extends Model
 {
     use HasFactory;
-    protected $fillable = ['kode_cart','kode_pengguna','Product_id','QTY','Desc'];
+    protected $fillable = ['kode_cart','kode_pengguna','nama_pengguna','kode_customer','nama_customer','Product_id','QTY','Desc','phone'];
 
     protected $primaryKey = 'kode_cart';
     public $incrementing = false;
@@ -20,8 +20,24 @@ class Cart extends Model
 
 public function Pengguna()
 {
-    return $this->belongsTo(Produk::class, 'kode_pengguna');
+    return $this->belongsTo(Pengguna::class, 'kode_pengguna');
 }
+
+public function Transaksi()
+{
+    return $this->belongsTo(Transaksi::class, 'kode_cart');
+}
+
+protected static function booted()
+{
+    static::updated(function ($cart) {
+        Transaksi::where('kode_cart', $cart->kode_cart)
+            ->update(['QTY' => $cart->QTY]);
+    });
+}
+
+
+
 
 }
 

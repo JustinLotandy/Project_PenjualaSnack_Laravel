@@ -27,8 +27,8 @@ return new class extends Migration
             $table->integer('Stok');
             $table->integer('Harga');
 
-            $table->foreign('Userid')->references('kode_pengguna')->on('penggunas');
-            $table->foreign('Kategori')->references('kode_kategori')->on('kategoris');
+            $table->foreign('Userid')->references('kode_pengguna')->on('penggunas')->onUpdate('cascade');;
+            $table->foreign('Kategori')->references('kode_kategori')->on('kategoris')->onUpdate('cascade');;
             
         });
     }

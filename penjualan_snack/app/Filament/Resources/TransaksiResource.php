@@ -22,6 +22,8 @@ use App\Imports\TransaksiImport;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\IconColumn;
+
 
 class TransaksiResource extends Resource
 {
@@ -49,33 +51,68 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(11),
             
-            Forms\components\TextInput::make('kode_cart')
-            ->label("Kode Cart")
-            ->required()
-            ->maxLength(11),
+            Select::make('kode_cart')
+            ->label('Kode Cart')
+            ->options(function () {
+                // Menampilkan semua kode_cart di dropdown
+                return \App\Models\Cart::pluck('kode_cart', 'kode_cart');
+            })
+            ->reactive() // Agar dropdown menjadi reaktif
+            ->afterStateUpdated(function (callable $set, $state) {
+                // Ambil data cart berdasarkan kode_cart yang dipilih
+                $cart = \App\Models\Cart::where('kode_cart', $state)->first();
 
-            Forms\components\TextInput::make('kode_databank')
-            ->label("Kode Data Bank")
-            ->required()
-            ->maxLength(225),
-            
-            Forms\components\TextInput::make('kode_transaksi')
-            ->label("Transaction Number")
-            ->required()
-            ->maxLength(225),
+                if ($cart) {
+                    // Isi otomatis kolom lain berdasarkan data dari tabel cart
+                    $set('kode_customer', $cart->kode_customer);
+                    $set('nama_customer', $cart->nama_customer);
+                    $set('QTY', $cart->QTY);
+                    $set('kode_produk', $cart->Product_id);
+                    $set('nama_produk', $cart->Desc);
+                    $set('Phone', $cart->phone);
+                }
+            })
+            ->required(),
+
+            Select::make('kode_databank')
+                ->label('Kode DataBank')
+                ->options(function () {
+                    // Ambil Userid sebagai key dan tampilkan hanya Userid di dropdown
+                    return \App\Models\DataBank::pluck('kode_databank', 'kode_databank');
+                })
+                ->reactive() // Aktifkan reaktivitas untuk mendeteksi perubahan
+                ->afterStateUpdated(function (callable $set, $state) {
+                    // Cari Username berdasarkan Userid yang dipilih
+                    $databank = \App\Models\DataBank::where('kode_databank', $state)->first();
+                })  
+                ->required(),
+
+            Forms\components\TextInput::make('kode_customer')
+            ->label('Kode Customer')
+            ->readonly(),
+
+            Forms\components\TextInput::make('nama_customer')
+            ->label('Nama Customer')
+            ->readonly(),
+
+            Forms\components\TextInput::make('Phone')
+            ->label('Phone')
+            ->readonly(),
+
+            Forms\components\TextInput::make('kode_produk')
+            ->label('Kode Produk')
+            ->readonly(),
+
+            Forms\components\TextInput::make('nama_produk')
+            ->label('Nama Produk')
+            ->readonly(),
+
+            Forms\components\TextInput::make('QTY')
+            ->label('Kuantitas')
+            ->readonly(),
 
             Forms\components\TextInput::make('Total_berat')
             ->label("Total Berat")
-            ->required()
-            ->maxLength(255),
-
-            Forms\components\TextInput::make('nama_produk')
-            ->label("Nama Produk")
-            ->required()
-            ->maxLength(11),
-
-            Forms\components\TextInput::make('Phone')
-            ->label("Phone")
             ->required()
             ->maxLength(255),
 
@@ -104,20 +141,12 @@ class TransaksiResource extends Resource
             ->required()
             ->maxLength(225),
 
-            FileUpload::make('Bukti_tansaksi')
+            FileUpload::make('Bukti_transaksi')
                     ->label('Upload File')
                     ->acceptedFileTypes(['image/png', 'image/jpeg'])
                     ->directory('uploads/images') 
                     ->visibility('public') 
                     ->required(), 
-
-            Forms\components\Select::make('Status')
-            ->label('Status')
-                ->options([
-                    'pending' => 'Pending',
-                    'approved' => 'Approved',
-                    'rejected' => 'Rejected',
-                ]),
 
             Forms\components\DateTimePicker::make('Date')
             ->label("Date")
@@ -134,23 +163,36 @@ class TransaksiResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kode_transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_cart')->label('Kode Cart')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('kode_transaksi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total_berat')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kode_customer')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_customer')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Phone')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_produk')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Cart.QTY')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('No_resi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kurir')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Kota')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ongkir')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Total')->sortable()->searchable(),
-                ImageColumn::make('Bukti_tansaksi') 
+                ImageColumn::make('Bukti_transaksi') 
                 ->width(100)
                 ->disk('public') 
                 ->url(fn($record) => Storage::disk('public')->url($record->image)),
-                Tables\Columns\TextColumn::make('Status')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Date')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Adress')->sortable()->searchable(),
+                IconColumn::make('status_approval')
+                ->boolean()
+                ->label('Approval Status')
+                ->trueIcon('heroicon-s-check-circle') // Ikon hijau
+                ->falseIcon('heroicon-s-x-circle') // Ikon merah
+                ->colors([
+                    'success' => fn ($state) => $state === 'Approved',
+                    'danger' => fn ($state) => $state === 'Pending',
+                ]),
+                
             ])
             ->filters([
                 //

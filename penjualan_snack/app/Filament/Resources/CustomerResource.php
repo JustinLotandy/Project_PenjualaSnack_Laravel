@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PenggunaResource\Pages;
-use App\Filament\Resources\PenggunaResource\RelationManagers;
-use App\Models\Pengguna;
+use App\Filament\Resources\CustomerResource\Pages;
+use App\Filament\Resources\CustomerResource\RelationManagers;
+use App\Models\Customer;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -17,49 +17,45 @@ use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
-use App\Imports\penggunaImport;
+use App\Imports\customerImpor;
 
-class PenggunaResource extends Resource
+class CustomerResource extends Resource
 {
-    protected static ?string $model = Pengguna::class;
+    protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Data Dan Pengguna';
+    protected static ?string $navigationGroup = 'Data Pelanggan';
 
     public static function getModelLabel(): string
     {
-        return 'Pengguna'; 
+        return 'Customer';
     }
 
-    // Override plural label
     public static function getPluralModelLabel(): string
     {
-        return 'Pengguna'; 
+        return 'Customers';
     }
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\components\TextInput::make('kode_pengguna')
-                ->label("User ID")
-                ->required()
-                ->maxLength(1000),
+                Forms\Components\TextInput::make('kode_customer')
+                    ->label("Kode Customer")
+                    ->required()
+                    ->maxLength(50),
+                    
+                Forms\Components\TextInput::make('nama_customer')
+                    ->label("Nama Customer")
+                    ->required()
+                    ->maxLength(255),
+                    
+                Forms\Components\TextInput::make('no_telepon')
+                    ->label("No Telepon")
+                    ->required()
+                    ->maxLength(255),
 
-                Forms\components\TextInput::make('Username')
-                ->label("Username")
-                ->required()
-                ->maxLength(1000),
-
-                Forms\components\TextInput::make('password')
-                ->label("Pasword")
-                ->required()
-                ->maxLength(500),
-
-                Forms\components\TextInput::make('Role')
-                ->label("Role")
-                ->required()
-                ->maxLength(200),
             ]);
     }
 
@@ -67,16 +63,9 @@ class PenggunaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode_pengguna')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Username')->sortable()->searchable(),
-
-                Tables\Columns\TextColumn::make('password') ->label('password')  
-                ->formatStateUsing(fn ($state) => '*****')  
-                ->sortable()->searchable(),
-
-                Tables\Columns\TextColumn::make('Role')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Role')->sortable()->searchable(),
-               
+                Tables\Columns\TextColumn::make('kode_customer')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('nama_customer')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('no_telepon')->sortable()->searchable(),
             ])
             ->filters([
                 //
@@ -90,7 +79,7 @@ class PenggunaResource extends Resource
                     ->label('Import Excel')
                     ->action(function (array $data) {
                         $filePath = storage_path('app/public/' . $data['file']);
-                        Excel::import(new penggunaImport, $filePath);
+                        Excel::import(new customerImpor, $filePath);
 
                         Notification::make()
                             ->title('Data berhasil diimpor!')
@@ -105,7 +94,7 @@ class PenggunaResource extends Resource
                             ->acceptedFileTypes(['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel'])
                             ->required(),
                     ])
-                    ->modalHeading('Import Data Pengguna')
+                    ->modalHeading('Import Data Customer')
                     ->modalButton('Import')
                     ->color('success'),
             ])
@@ -126,9 +115,9 @@ class PenggunaResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListPenggunas::route('/'),
-            'create' => Pages\CreatePengguna::route('/create'),
-            'edit' => Pages\EditPengguna::route('/{record}/edit'),
+            'index' => Pages\ListCustomers::route('/'),
+            'create' => Pages\CreateCustomer::route('/create'),
+            'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
     }
 }

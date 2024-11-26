@@ -17,7 +17,7 @@ class data_bankSeeder extends Seeder
     
         $dataBankData = [
             [
-                'kode_databank' => 1,
+                'kode_databank' => 'BANK-001',
                 'norek' => '126543212',
                 'nama_databank' => 'Hardy',
                 'file' => 'images/Bukti.png',

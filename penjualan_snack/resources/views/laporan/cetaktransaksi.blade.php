@@ -51,20 +51,23 @@
         <thead>
             <tr>
                 <th>Kode Transaksi</th>
-                <th>Kode Databank</th>
+                <th>Kode DataBank</th>
                 <th>Kode Cart</th>
+                <th>Kode Customer</th>
+                <th>Nama Customer</th>
                 <th>Nama Produk</th>
                 <th>Total Berat</th>
                 <th>Phone</th>
-                <th>No. Resi</th>
+                <th>No Resi</th>
                 <th>Kurir</th>
                 <th>Kota</th>
                 <th>Ongkir</th>
                 <th>Total</th>
                 <th>Bukti Transaksi</th>
-                <th>Status</th>
-                <th>Date</th>
+                <th>Tanggal</th>
                 <th>Alamat</th>
+                <th>QTY</th>
+                <th>Status Approval</th>
             </tr>
         </thead>
         <tbody>
@@ -73,6 +76,8 @@
                     <td>{{ $transaksi->kode_transaksi }}</td>
                     <td>{{ $transaksi->kode_databank }}</td>
                     <td>{{ $transaksi->kode_cart }}</td>
+                    <td>{{ $transaksi->kode_customer }}</td>
+                    <td>{{ $transaksi->nama_customer }}</td>
                     <td>{{ $transaksi->nama_produk }}</td>
                     <td>{{ $transaksi->Total_berat }}</td>
                     <td>{{ $transaksi->Phone }}</td>
@@ -81,10 +86,11 @@
                     <td>{{ $transaksi->Kota }}</td>
                     <td>{{ $transaksi->Ongkir }}</td>
                     <td>{{ $transaksi->Total }}</td>
-                    <td>{{ $transaksi->Bukti_tansaksi }}</td>
-                    <td>{{ $transaksi->Status }}</td>
+                    <td>{{ $transaksi->Bukti_transaksi }}</td>
                     <td>{{ $transaksi->Date }}</td>
                     <td>{{ $transaksi->Adress }}</td>
+                    <td>{{ $transaksi->QTY }}</td>
+                    <td>{{ $transaksi->status_approval }}</td>
                 </tr>
             @endforeach
         </tbody>

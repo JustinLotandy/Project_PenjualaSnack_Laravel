@@ -65,7 +65,7 @@ class ProdukResource extends Resource
                 ->afterStateUpdated(function (callable $set, $state) {
                     // Cari Username berdasarkan Userid yang dipilih
                     $user = \App\Models\pengguna::where('Kode_pengguna', $state)->first();
-                    $set('Nama_produk', $user ? $user->Username : null);
+                    $set('Created_by', $user ? $user->Username : null);
                 })  
                 ->required(),
                 
@@ -83,6 +83,7 @@ class ProdukResource extends Resource
                     $set('Deskirpsi', $kategori ? $kategori->Nama_kategori : null);
                 })
                 ->required(),
+
                 Forms\components\TextInput::make('Isi')
                 ->label("Isi")
                 ->required()
@@ -130,7 +131,7 @@ class ProdukResource extends Resource
 
                 Forms\components\TextInput::make('Created_by')
                 ->label('Created By')
-                ->disabled() // Kolom ini hanya untuk ditampilkan, tidak bisa diubah oleh user
+                // ->disabled() // Kolom ini hanya untuk ditampilkan, tidak bisa diubah oleh user
                 ->required(),
                 // Forms\components\TextInput::make('Created_by')
                 // ->label("Created By")
@@ -161,7 +162,7 @@ class ProdukResource extends Resource
                 ->disk('public') 
                 ->url(fn($record) => Storage::disk('public')->url($record->image)),
                 Tables\Columns\TextColumn::make('Userid')->label('User ID')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('kategori')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ukuran')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Expired')->sortable()->searchable(),
