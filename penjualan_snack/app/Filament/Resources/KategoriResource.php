@@ -64,6 +64,7 @@ class KategoriResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('kode_kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama_kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('View_count')->sortable()->searchable(),
             ])

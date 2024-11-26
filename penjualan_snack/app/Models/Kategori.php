@@ -12,4 +12,10 @@ class Kategori extends Model
 
     protected $primaryKey = 'kode_kategori';
     public $incrementing = false;
+
+    public function produk()
+{
+    return $this->hasMany(Produk::class, 'kode_kategori', 'kode_kategori');
+}
+
 }

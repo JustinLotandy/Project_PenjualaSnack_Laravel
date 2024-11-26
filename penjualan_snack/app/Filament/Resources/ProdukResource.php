@@ -21,6 +21,7 @@ use Filament\Notifications\Notification;
 use App\Imports\ProdukImport;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Forms\Components\Select;
 
 
 
@@ -54,17 +55,34 @@ class ProdukResource extends Resource
                 ->required()
                 ->maxLength(11),
 
-                Forms\components\TextInput::make('Userid')
-                ->label("User ID")
-                ->required()
-                ->maxLength(11),
+                Select::make('Userid')
+                ->label('Kode Pengguna')
+                ->options(function () {
+                    // Ambil Userid sebagai key dan tampilkan hanya Userid di dropdown
+                    return \App\Models\Pengguna::pluck('Kode_pengguna', 'Kode_pengguna');
+                })
+                ->reactive() // Aktifkan reaktivitas untuk mendeteksi perubahan
+                ->afterStateUpdated(function (callable $set, $state) {
+                    // Cari Username berdasarkan Userid yang dipilih
+                    $user = \App\Models\pengguna::where('Kode_pengguna', $state)->first();
+                    $set('Nama_produk', $user ? $user->Username : null);
+                })  
+                ->required(),
                 
                 
-                Forms\components\TextInput::make('Kategori')
-                ->label("Kategori")
-                ->required()
-                ->maxLength(225),
-
+                Select::make('Kategori')
+                ->label('Kode Kategori')
+                ->options(function () {
+                    // Menampilkan hanya kode_kategori di dropdown
+                    return \App\Models\Kategori::pluck('kode_kategori', 'kode_kategori');
+                })
+                ->reactive() // Agar perubahan langsung memicu event
+                ->afterStateUpdated(function (callable $set, $state) {
+                    // Ambil Nama_kategori berdasarkan kode_kategori yang dipilih
+                    $kategori = \App\Models\Kategori::where('kode_kategori', $state)->first();
+                    $set('Deskirpsi', $kategori ? $kategori->Nama_kategori : null);
+                })
+                ->required(),
                 Forms\components\TextInput::make('Isi')
                 ->label("Isi")
                 ->required()
@@ -84,11 +102,15 @@ class ProdukResource extends Resource
                 ->label("Berat")
                 ->required()
                 ->maxLength(11),
-                
+
                 Forms\components\TextInput::make('Deskirpsi')
-                ->label("Deskripsi")
-                ->required()
-                ->maxLength(225),
+                ->label('Deskripsi')
+                ->required(),
+                
+                // Forms\components\TextInput::make('Deskirpsi')
+                // ->label("Deskripsi")
+                // ->required()
+                // ->maxLength(225),
                 
                 Forms\components\TextInput::make('Nama_produk')
                 ->label("Nama")
@@ -107,9 +129,13 @@ class ProdukResource extends Resource
                 ->required(),
 
                 Forms\components\TextInput::make('Created_by')
-                ->label("Created By")
-                ->required()
-                ->maxLength(225),
+                ->label('Created By')
+                ->disabled() // Kolom ini hanya untuk ditampilkan, tidak bisa diubah oleh user
+                ->required(),
+                // Forms\components\TextInput::make('Created_by')
+                // ->label("Created By")
+                // ->required()
+                // ->maxLength(225),
 
                 Forms\components\TextInput::make('Stok')
                 ->label("Stok")
@@ -135,14 +161,13 @@ class ProdukResource extends Resource
                 ->disk('public') 
                 ->url(fn($record) => Storage::disk('public')->url($record->image)),
                 Tables\Columns\TextColumn::make('Userid')->label('User ID')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Kategori')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('kategori')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Isi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Ukuran')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Expired')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Berat')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Deskirpsi')->label('Deskripsi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Nama_produk')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Created_by')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Stok')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('Harga')->sortable()->searchable(),

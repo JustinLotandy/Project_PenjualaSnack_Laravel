@@ -19,4 +19,10 @@ class Produk extends Model
     return $this->hasMany(Cart::class, 'kode_produk');
 }
 
+public function kategori()
+{
+    return $this->belongsTo(Kategori::class, 'kode_kategori', 'kode_kategori');
+}
+
+
 }
