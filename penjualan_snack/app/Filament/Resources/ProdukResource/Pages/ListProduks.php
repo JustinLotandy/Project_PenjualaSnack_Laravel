@@ -7,6 +7,7 @@ use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
 use Barryvdh\DomPDF\Facade\pdf;
 
+
 class ListProduks extends ListRecords
 {
     protected static string $resource = ProdukResource::class;
@@ -33,4 +34,6 @@ class ListProduks extends ListRecords
     // Unduh file PDF
     return response()->streamDownload(fn() => print($pdf->output()), 'laporan_Prduk.pdf');
     }
+
+    
 }

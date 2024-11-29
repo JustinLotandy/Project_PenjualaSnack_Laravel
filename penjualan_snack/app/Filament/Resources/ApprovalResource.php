@@ -15,9 +15,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Filament\Forms\Components\FileUpload;
 use Filament\Notifications\Notification;
 use App\Imports\ApprovalImport;
+use Filament\Tables\Columns\ImageColumn;
 
 class ApprovalResource extends Resource
 {
+    
     protected static ?string $model = Approval::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-check-circle';
@@ -31,7 +33,7 @@ class ApprovalResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return 'Approvals';
+        return 'Approval';
     }
 
     public static function form(Form $form): Form
@@ -77,6 +79,8 @@ class ApprovalResource extends Resource
                 Tables\Columns\TextColumn::make('No_resi')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_customer')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama_customer')->sortable()->searchable(),
+
+                
                 Tables\Columns\BadgeColumn::make('Status')
                     ->label('Approval Status')
                     ->colors([

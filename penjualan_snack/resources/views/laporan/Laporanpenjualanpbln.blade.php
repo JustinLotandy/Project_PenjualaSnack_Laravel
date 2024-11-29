@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Penjualan Produk Per Bulan</title>
+    <title>Laporan Penjualan Per Bulan</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,88 +11,99 @@
             background-color: #f9f9f9;
             color: #333;
         }
-        .header, .footer {
+        h2 {
             text-align: center;
-            margin-bottom: 20px;
+            color: #555;
         }
-        .table {
+        table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
             background-color: #fff;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            table-layout: fixed;
         }
-        .table th, .table td {
-            padding: 12px 15px;
+        th, td {
+            padding: 8px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            font-size: 12px;
         }
-        .table th {
+        th {
             background-color: #28a745;
             color: #fff;
             font-weight: bold;
         }
-        .table tbody tr:nth-child(even) {
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        tbody tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        .table tbody tr:nth-child(odd) {
+        tbody tr:nth-child(odd) {
             background-color: #fff;
         }
-        .footer-summary {
+        .text-center {
+            text-align: center;
+        }
+        .text-right {
+            text-align: right;
+        }
+        .bold {
             font-weight: bold;
-            margin: 5px 0;
         }
     </style>
 </head>
 <body>
-    <!-- Report Header -->
-    <div class="header">
-        <h2>Laporan Penjualan Produk Per Bulan</h2>
-        <p>Periode: Januari - Desember 2024</p>
-    </div>
 
-    <!-- Detail -->
-    <table class="table">
+    <h2>Laporan Penjualan Per Bulan</h2>
+    <p class="text-center">Tanggal Cetak: {{ \Carbon\Carbon::now()->format('d-m-Y') }}</p>
+    <p class="text-center">Menampilkan data penjualan untuk bulan: 
+        <strong>{{ $data->first() ? \Carbon\Carbon::parse($data->first()->tanggal_transaksi)->format('F Y') : '-' }}</strong>
+    </p>
+
+    <table>
         <thead>
             <tr>
-                <th>Bulan</th>
-                <th>Nama Produk</th>
-                <th>Jumlah Transaksi</th>
-                <th>Total Qty</th>
-                <th>Total Penjualan (Rp)</th>
+                <th style="width: 10%;">Tanggal Transaksi</th>
+                <th style="width: 15%;">Kode Transaksi</th>
+                <th style="width: 10%;">Kode Produk</th>
+                <th style="width: 20%;">Nama Produk</th>
+                <th style="width: 10%;">Harga Satuan (Rp)</th>
+                <th style="width: 10%;">QTY</th>
+                <th style="width: 20%;">Total Harga (Rp)</th>
             </tr>
         </thead>
         <tbody>
             @php
-                $totalTransaksi = 0;
-                $totalQty = 0;
-                $totalPenjualan = 0;
+                $grandTotal = 0;
             @endphp
 
-            @foreach($data as $row)
+            @forelse ($data as $row)
                 <tr>
-                    <td>{{ $row->bulan }}</td>
+                    <td>{{ \Carbon\Carbon::parse($row->tanggal_transaksi)->format('d-m-Y') }}</td>
+                    <td>{{ $row->kode_transaksi }}</td>
+                    <td>{{ $row->kode_produk }}</td>
                     <td>{{ $row->nama_produk }}</td>
-                    <td>{{ $row->jumlah_transaksi }}</td>
-                    <td>{{ $row->total_qty }}</td>
-                    <td>{{ number_format($row->total_penjualan, 0, ',', '.') }}</td>
+                    <td class="text-right">Rp {{ number_format($row->harga_per_barang, 0, ',', '.') }}</td>
+                    <td class="text-center">{{ $row->QTY }}</td>
+                    <td class="text-right">Rp {{ number_format($row->total, 0, ',', '.') }}</td>
                 </tr>
-
                 @php
-                    $totalTransaksi += $row->jumlah_transaksi;
-                    $totalQty += $row->total_qty;
-                    $totalPenjualan += $row->total_penjualan;
+                    $grandTotal += $row->total;
                 @endphp
-            @endforeach
+            @empty
+                <tr>
+                    <td colspan="7" class="text-center" style="color: #555;">Tidak ada data penjualan yang tersedia.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 
-    <!-- Report Footer -->
-    <div class="footer">
-        <p class="footer-summary">Total Penjualan Tahun Ini: Rp {{ number_format($totalPenjualan, 0, ',', '.') }}</p>
-        <p class="footer-summary">Total Transaksi Tahun Ini: {{ $totalTransaksi }} transaksi</p>
-        <p class="footer-summary">Total Qty Terjual: {{ $totalQty }} unit</p>
-    </div>
+    <p class="text-right bold" style="font-size: 14px; margin-top: 10px;">
+        Total Penjualan Bulan Ini: Rp {{ number_format($grandTotal, 0, ',', '.') }}
+    </p>
+
 </body>
 </html>

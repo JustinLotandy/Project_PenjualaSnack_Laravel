@@ -5,69 +5,55 @@
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Laporan Transaksi</title>
  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background-color: #f9f9f9;
-        color: #333;
-    }
-    h2 {
-        text-align: center;
-        color: #555;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 20px 0;
-        background-color: #fff;
-        border-radius: 5px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        overflow: hidden;
-    }
-    th, td {
-        padding: 12px 15px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-    th {
-        background-color: #28a745;
-        color: #fff;
-        font-weight: bold;
-    }
-    tr:hover {
-        background-color: #f1f1f1;
-    }
-    tbody tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    tbody tr:nth-child(odd) {
-        background-color: #fff;
-    }
- </style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 10px; /* Reduce font size for better fit */
+        }
+        table {
+            width: 100%; /* Ensure table takes up full width */
+            border-collapse: collapse; /* Remove gaps between table borders */
+        }
+        th, td {
+            padding: 4px; /* Reduce padding to save space */
+            text-align: left;
+            border: 1px solid #ddd; /* Add border for clear separation */
+            word-wrap: break-word; /* Ensure long text wraps */
+        }
+        th {
+            background-color: #4CAF50; /* Green background */
+            color: white; /* White text */
+        }
+        th:nth-child(odd) {
+            background-color: #45a049; /* Slightly darker green for odd columns */
+        }
+        th:nth-child(even) {
+            background-color: #4CAF50; /* Original green for even columns */
+        }
+    </style>
 </head>
 <body>
     <h2>Laporan Transaksi</h2>
     <table>
         <thead>
             <tr>
-                <th>Kode Transaksi</th>
-                <th>Kode DataBank</th>
-                <th>Kode Cart</th>
-                <th>Kode Customer</th>
-                <th>Nama Customer</th>
-                <th>Nama Produk</th>
-                <th>Total Berat</th>
-                <th>Phone</th>
-                <th>No Resi</th>
-                <th>Kurir</th>
-                <th>Kota</th>
-                <th>Ongkir</th>
-                <th>Total</th>
-                <th>Bukti Transaksi</th>
-                <th>Tanggal</th>
-                <th>Alamat</th>
-                <th>QTY</th>
-                <th>Status Approval</th>
+                <th style="width: 7%;">Kode Transaksi</th>
+                <th style="width: 7%;">Kode DataBank</th>
+                <th style="width: 7%;">Kode Cart</th>
+                <th style="width: 10%;">Kode Customer</th>
+                <th style="width: 10%;">Nama Customer</th>
+                <th style="width: 10%;">Nama Produk</th>
+                <th style="width: 7%;">Total Berat</th>
+                <th style="width: 7%;">Phone</th>
+                <th style="width: 8%;">No Resi</th>
+                <th style="width: 8%;">Kurir</th>
+                <th style="width: 7%;">Kota</th>
+                <th style="width: 7%;">Ongkir</th>
+                <th style="width: 7%;">Total</th>
+                <th style="width: 10%;">Bukti Transaksi</th>
+                <th style="width: 7%;">Tanggal</th>
+                <th style="width: 10%;">Alamat</th>
+                <th style="width: 7%;">QTY</th>
+                <th style="width: 10%;">Status Approval</th>
             </tr>
         </thead>
         <tbody>

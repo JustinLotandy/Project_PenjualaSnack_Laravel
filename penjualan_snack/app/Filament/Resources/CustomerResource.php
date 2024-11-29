@@ -25,7 +25,7 @@ class CustomerResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationGroup = 'Data Pelanggan';
+    protected static ?string $navigationGroup = 'Data Dan Pengguna';
 
     public static function getModelLabel(): string
     {
@@ -34,7 +34,7 @@ class CustomerResource extends Resource
 
     public static function getPluralModelLabel(): string
     {
-        return 'Customers';
+        return 'Customer';
     }
 
     public static function form(Form $form): Form

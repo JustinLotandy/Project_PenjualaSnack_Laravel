@@ -29,6 +29,16 @@ class Approval extends Model
         // Hapus data transaksi terkait
         Transaksi::where('kode_transaksi', $approval->kode_transaksi)->delete();
     });
+
+    static::updated(function ($approval) {
+        // Update status di Transaksi jika status di Approval berubah
+        if ($approval->isDirty('Status')) {
+            Transaksi::where('kode_transaksi', $approval->kode_transaksi)
+                ->update(['status_approval' => $approval->Status]);
+        }
+    });
     }
+
+
 
 }
