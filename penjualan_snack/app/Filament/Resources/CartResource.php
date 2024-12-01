@@ -42,7 +42,7 @@ class CartResource extends Resource
                 Forms\Components\TextInput::make('kode_cart')
                 ->label('Kode Cart')
                 ->required()
-                ->default('CART-') // Default prefix untuk kode_cart
+                ->default('CART-') 
                 ->placeholder(function () {
                     $lastKode = Cart::query()
                         ->whereNotNull('kode_cart')
