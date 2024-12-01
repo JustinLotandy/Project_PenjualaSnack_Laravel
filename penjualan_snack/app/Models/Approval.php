@@ -22,6 +22,7 @@ class Approval extends Model
     public function transaksi(): BelongsTo
     {
         return $this->belongsTo(Transaksi::class);
+        
     }
     protected static function booted()
     {
@@ -37,8 +38,17 @@ class Approval extends Model
                 ->update(['status_approval' => $approval->Status]);
         }
     });
+
+    static::updated(function ($approval) {
+        // Pastikan hanya dijalankan ketika kolom `Status` berubah
+        if ($approval->isDirty('Status')) {
+            // Perbarui status_approval di model Transaksi
+            Transaksi::where('kode_transaksi', $approval->kode_transaksi)
+                ->update(['status_approval' => $approval->Status]);
+        }
+    });
     }
 
-
+    
 
 }

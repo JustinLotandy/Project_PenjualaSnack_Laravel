@@ -67,10 +67,27 @@ class Transaksi extends Model
                 'nama_customer' => $transaksi->nama_customer,
                 'Status' => 'Pending', // Atur status default jika diperlukan
             ]);
+            
+
+          
         });
         static::deleting(function ($transaksi) {
             // Hapus approval terkait
             $transaksi->approve()->delete();
         });
+
+        static::updated(function ($approval) {
+            if ($approval->isDirty('Status')) {
+                \Log::info('Status changed in Approval', [
+                    'old' => $approval->getOriginal('Status'),
+                    'new' => $approval->Status,
+                ]);
+        
+                Transaksi::where('kode_transaksi', $approval->kode_transaksi)
+                    ->update(['status_approval' => $approval->Status]);
+            }
+        });
+        
+        
     }
 }
