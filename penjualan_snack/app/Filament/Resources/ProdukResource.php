@@ -51,9 +51,26 @@ class ProdukResource extends Resource
         return $form
             ->schema([
 
-                Forms\components\TextInput::make('kode_produk')
+                Forms\Components\TextInput::make('kode_produk')
                 ->label("Kode Produk")
                 ->required()
+                ->default('P-') // Awali dengan 'PRD-'
+                ->placeholder(function () {
+                    $lastKode = Produk::query()
+                        ->whereNotNull('kode_produk')
+                        ->latest('kode_produk')
+                        ->value('kode_produk');
+                        
+                    return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = Produk::query()
+                        ->whereNotNull('kode_produk')
+                        ->latest('kode_produk')
+                        ->value('kode_produk');
+                        
+                    return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode produk sebelumnya';
+                })
                 ->maxLength(11),
 
                 Select::make('Userid')
@@ -115,7 +132,7 @@ class ProdukResource extends Resource
                 // ->maxLength(225),
                 
                 Forms\components\TextInput::make('Nama_produk')
-                ->label("Nama")
+                ->label("Nama Produk")
                 ->required()
                 ->maxLength(225),
 

@@ -43,10 +43,27 @@ class KategoriResource extends Resource
         return $form
             ->schema([
                 
-                Forms\components\TextInput::make('kode_kategori')
+                Forms\Components\TextInput::make('kode_kategori')
                 ->label("Kode Kategori")
                 ->required()
-                ->maxLength(1000),
+                ->default('KTR-')
+                ->placeholder(function () {
+                    $lastKode = Kategori::query()
+                        ->whereNotNull('kode_kategori')
+                        ->latest('kode_kategori')
+                        ->value('kode_kategori');
+            
+                    return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = Kategori::query()
+                        ->whereNotNull('kode_kategori')
+                        ->latest('kode_kategori')
+                        ->value('kode_kategori');
+            
+                    return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode kategori sebelumnya';
+                })
+                ->maxLength(100),
 
                 Forms\components\TextInput::make('Nama_kategori')
                 ->label("Nama Kategori")

@@ -42,9 +42,26 @@ class DataBankResource extends Resource
         return $form
             ->schema([
 
-                Forms\components\TextInput::make('kode_databank')
+                Forms\Components\TextInput::make('kode_databank')
                 ->label("Kode Databank")
                 ->required()
+                ->default('BANK-') // Awali dengan DB-
+                ->placeholder(function () {
+                    $lastKode = DataBank::query()
+                        ->whereNotNull('kode_databank')
+                        ->latest('kode_databank')
+                        ->value('kode_databank');
+            
+                    return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = DataBank::query()
+                        ->whereNotNull('kode_databank')
+                        ->latest('kode_databank')
+                        ->value('kode_databank');
+            
+                    return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode databank sebelumnya';
+                })
                 ->maxLength(20),
             
                 Forms\components\TextInput::make('nama_databank')
@@ -81,8 +98,8 @@ class DataBankResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('kode_databank')->sortable()->searchable(),
+                Tables\Columns\TextColumn::make('created_at')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('nama_databank')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('norek')->sortable()->searchable(),
                 ImageColumn::make('file') 

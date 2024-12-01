@@ -41,10 +41,28 @@ class PenggunaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\components\TextInput::make('kode_pengguna')
+                Forms\Components\TextInput::make('kode_pengguna')
                 ->label("User ID")
                 ->required()
-                ->maxLength(1000),
+                ->default('US-') // Awali dengan 'USR-'
+                ->placeholder(function () {
+                    $lastKode = Pengguna::query()
+                        ->whereNotNull('kode_pengguna')
+                        ->latest('kode_pengguna')
+                        ->value('kode_pengguna');
+                        
+                    return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = Pengguna::query()
+                        ->whereNotNull('kode_pengguna')
+                        ->latest('kode_pengguna')
+                        ->value('kode_pengguna');
+                        
+                    return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode pengguna sebelumnya';
+                })
+                ->maxLength(100),
+            
 
                 Forms\components\TextInput::make('Username')
                 ->label("Username")

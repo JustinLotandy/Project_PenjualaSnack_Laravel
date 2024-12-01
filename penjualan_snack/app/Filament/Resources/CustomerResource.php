@@ -42,9 +42,26 @@ class CustomerResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('kode_customer')
-                    ->label("Kode Customer")
-                    ->required()
-                    ->maxLength(50),
+                ->label('Kode Customer')
+                ->required()
+                ->default('CUST-') // Default prefix untuk kode_customer
+                ->placeholder(function () {
+                    $lastKode = Customer::query()
+                        ->whereNotNull('kode_customer')
+                        ->latest('kode_customer')
+                        ->value('kode_customer');
+
+                    return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = Customer::query()
+                        ->whereNotNull('kode_customer')
+                        ->latest('kode_customer')
+                        ->value('kode_customer');
+
+                            return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode customer sebelumnya';
+                         })
+                            ->maxLength(50),
                     
                 Forms\Components\TextInput::make('nama_customer')
                     ->label("Nama Customer")

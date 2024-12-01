@@ -28,7 +28,7 @@ use Filament\Tables\Columns\IconColumn;
 class TransaksiResource extends Resource
 {
     protected static ?string $model = Transaksi::class;
-
+    
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
     protected static ?string $navigationGroup = 'Transaksi';
     public static function getModelLabel(): string
@@ -46,9 +46,26 @@ class TransaksiResource extends Resource
         return $form
         ->schema([
 
-            Forms\components\TextInput::make('kode_transaksi')
-            ->label("Kode Transaksi")
+            Forms\Components\TextInput::make('kode_transaksi')
+            ->label('Kode Transaksi')
             ->required()
+            ->default('TRK-')
+            ->placeholder(function () {
+                $lastKode = Transaksi::query()
+                    ->whereNotNull('kode_transaksi')
+                    ->latest('kode_transaksi')
+                    ->value('kode_transaksi');
+                    
+                return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+            })
+            ->hint(function () {
+                $lastKode = Transaksi::query()
+                    ->whereNotNull('kode_transaksi')
+                    ->latest('kode_transaksi')
+                    ->value('kode_transaksi');
+                    
+                return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode transaksi sebelumnya';
+            })
             ->maxLength(11),
             
             Select::make('kode_cart')

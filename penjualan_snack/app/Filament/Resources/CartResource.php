@@ -39,10 +39,28 @@ class CartResource extends Resource
         return $form
             ->schema([
                 
-                Forms\components\TextInput::make('kode_cart')
-                ->label("Kode Cart")
+                Forms\Components\TextInput::make('kode_cart')
+                ->label('Kode Cart')
                 ->required()
+                ->default('CART-') // Default prefix untuk kode_cart
+                ->placeholder(function () {
+                    $lastKode = Cart::query()
+                        ->whereNotNull('kode_cart')
+                        ->latest('kode_cart')
+                        ->value('kode_cart');
+
+                         return $lastKode ? "Last Code: $lastKode" : 'No previous code';
+                })
+                ->hint(function () {
+                    $lastKode = Cart::query()
+                        ->whereNotNull('kode_cart')
+                        ->latest('kode_cart')
+                        ->value('kode_cart');
+
+                    return $lastKode ? "Kode terakhir: $lastKode" : 'Belum ada kode cart sebelumnya';
+                 })
                 ->maxLength(20),
+                
 
                 Select::make('kode_pengguna')
                 ->label('Kode Pengguna')

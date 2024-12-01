@@ -42,7 +42,7 @@ class ListTransaksis extends ListRecords
                 ->modalSubheading('Apakah Anda yakin ingin mencetak laporan?'),
 
             Actions\Action::make('cetak_laporan_perkategori')
-                ->label('Cetak Laporan Transaksi berdasarkan Kota')
+                ->label('Cetak Laporan Transaksi berdasarkan kategori')
                 ->icon('heroicon-o-printer')
                 ->action(fn() => static::cetakLaporanPenjualanPerKategori())
                 ->requiresConfirmation()

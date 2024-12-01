@@ -42,6 +42,7 @@ class ApprovalResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('kode_transaksi')
                     ->label("Kode Transaksi")
+                    ->default('TRK-')
                     ->required()
                     ->maxLength(50),
 
