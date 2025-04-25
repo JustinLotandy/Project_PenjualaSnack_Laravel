@@ -18,6 +18,11 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\penggunaImport;
+use function Laravel\Prompts\select;
+use Filament\Forms\Components\Select;
+use Spatie\Permission\Models\Role;
+
+
 
 class PenggunaResource extends Resource
 {
@@ -74,10 +79,15 @@ class PenggunaResource extends Resource
                 ->required()
                 ->maxLength(500),
 
-                Forms\components\TextInput::make('Role')
-                ->label("Role")
-                ->required()
-                ->maxLength(200),
+                
+               
+
+Select::make('roles')
+    ->relationship('roles', 'name')
+    ->multiple()
+    ->preload()
+    ->searchable()
+
             ]);
     }
 
@@ -93,7 +103,7 @@ class PenggunaResource extends Resource
                 ->sortable()->searchable(),
 
                 Tables\Columns\TextColumn::make('Role')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('Role')->sortable()->searchable(),
+              
                
             ])
             ->filters([
