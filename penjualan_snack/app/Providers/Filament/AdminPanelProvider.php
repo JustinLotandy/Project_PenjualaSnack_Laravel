@@ -2,6 +2,9 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Widgets\approval;
+use App\Filament\Widgets\city;
+use App\Filament\Widgets\Penjualanbln;
 use App\Filament\Widgets\penjualanperkategori;
 use App\Filament\Widgets\perkota;
 use App\Filament\Widgets\Profitperbulan;
@@ -21,9 +24,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\AuthenticateSession;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-use App\Filament\Widgets\Penjualanbln;
-use App\Filament\Widgets\approval;
-use App\Filament\Widgets\city;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -46,10 +47,13 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
                 Widgets\FilamentInfoWidget::class,
-                approval::class,
-                city::class,
-                Penjualanbln::class,
-                
+                // approval::class,
+                // city::class,
+                // Penjualanbln::class,
+                // penjualanperkategori::class,
+                // perkota::class,
+                // Profitperbulan::class,
+                // statustransaksi::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -61,10 +65,12 @@ class AdminPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
-
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->plugins([
+                FilamentShieldPlugin::make(),
             ]);
     }
 }

@@ -19,9 +19,19 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\Select;
+use Filament\Facades\Filament;
+
+
 
 class CartResource extends Resource
 {
+
+    public static function shouldRegisterNavigation(): bool
+{
+    $user = Filament::auth()->user();
+
+    return $user && ($user->hasRole('customer') || $user->hasRole('super_admin'));
+}
     protected static ?string $model = Cart::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
@@ -191,6 +201,7 @@ class CartResource extends Resource
         ];
     }
 
+   
     public static function getPages(): array
     {
         return [

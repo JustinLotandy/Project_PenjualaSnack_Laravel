@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ApprovalResource\Pages;
+use Filament\Facades\Filament;
 use App\Models\Approval;
 use App\Models\Transaksi;
 use Filament\Forms;
@@ -19,7 +20,13 @@ use Filament\Tables\Columns\ImageColumn;
 
 class ApprovalResource extends Resource
 {
-    
+    public static function shouldRegisterNavigation(): bool
+{
+    $user = Filament::auth()->user();
+
+    // Hanya tampil untuk super_admin
+    return $user && $user->hasRole('super_admin');
+}
     protected static ?string $model = Approval::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-check-circle';
