@@ -23,10 +23,16 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\IconColumn;
-
+use Filament\Facades\Filament;
 
 class TransaksiResource extends Resource
 {
+    public static function shouldRegisterNavigation(): bool
+{
+    $user = Filament::auth()->user();
+
+    return $user && ($user->hasRole('customer') || $user->hasRole('super_admin'));
+}
     protected static ?string $model = Transaksi::class;
     
     protected static ?string $navigationIcon = 'heroicon-o-credit-card';
@@ -255,6 +261,8 @@ class TransaksiResource extends Resource
             //
         ];
     }
+
+
 
     public static function getPages(): array
     {

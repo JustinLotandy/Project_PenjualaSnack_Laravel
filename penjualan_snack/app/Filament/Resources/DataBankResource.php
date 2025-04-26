@@ -20,10 +20,17 @@ use Filament\Notifications\Notification;
 use App\Imports\DataBankImport;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
-
+use Filament\Facades\Filament;
 
 class DataBankResource extends Resource
 {
+    public static function shouldRegisterNavigation(): bool
+    {
+        $user = Filament::auth()->user();
+    
+        // Hanya tampil untuk super_admin
+        return $user && $user->hasRole('super_admin');
+    }
     protected static ?string $model = DataBank::class;
     
     protected static ?string $navigationIcon = 'heroicon-o-banknotes';

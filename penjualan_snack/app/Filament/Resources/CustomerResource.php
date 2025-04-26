@@ -18,9 +18,16 @@ use Filament\Forms\Components\FileUpload;
 use Illuminate\Support\Facades\Storage;
 use Filament\Notifications\Notification;
 use App\Imports\customerImpor;
-
+use Filament\Facades\Filament;
 class CustomerResource extends Resource
 {
+    public static function shouldRegisterNavigation(): bool
+{
+    $user = Filament::auth()->user();
+
+    // Hanya tampil untuk super_admin
+    return $user && $user->hasRole('super_admin');
+}
     protected static ?string $model = Customer::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-user';

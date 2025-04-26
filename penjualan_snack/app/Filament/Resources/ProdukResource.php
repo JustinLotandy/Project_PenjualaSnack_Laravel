@@ -22,12 +22,19 @@ use App\Imports\ProdukImport;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\Select;
-
+use Filament\Facades\Filament;
 
 
 
 class ProdukResource extends Resource
 {
+    public static function shouldRegisterNavigation(): bool
+{
+    $user = Filament::auth()->user();
+
+    // Hanya tampil untuk super_admin
+    return $user && $user->hasRole('super_admin');
+}
     protected static ?string $model = Produk::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-archive-box';
