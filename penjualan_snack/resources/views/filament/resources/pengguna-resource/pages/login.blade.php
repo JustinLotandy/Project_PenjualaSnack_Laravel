@@ -1,0 +1,9 @@
+<x-filament::input
+    id="Username"
+    name="Username"
+    label="Username"
+    type="text"
+    required
+    autofocus
+    autocomplete="username"
+/>
